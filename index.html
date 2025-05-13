@@ -378,21 +378,31 @@
     </head>
     <body>
         <nav class="py-8 border-b border-gaia-accent-teal/50">
-            <div class="container mx-auto flex justify-between items-center">
-                <div class="flex items-center">
-                    <div class="logo-circle">
-                        <img src="U9sK4_m8_400x400.jpg" alt="Symbiocene Labs Logo" class="logo-v">
-                    </div>
-                    <span class="text-xl font-bold">Symbiocene Labs</span>
-                </div>
-                <div class="flex">
-                    <a href="#mission" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Mission</a>
-                    <a href="#features" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Features</a>
-                    <a href="#services" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Services</a>
-                    <a href="https://gaiaaiagent.github.io/symbiocenelabs/greenpaper.html" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal" target="_blank">Greenpaper</a>
-                </div>
+    <div class="container mx-auto flex items-center"> <!-- Removed justify-between -->
+        <div class="flex items-center">
+            <div class="logo-circle">
+                <img src="U9sK4_m8_400x400.jpg" alt="Symbiocene Labs Logo" class="logo-v">
             </div>
+            <span class="text-xl font-bold mr-8">Symbiocene Labs</span> <!-- Added margin-right for spacing -->
+            <div class="nav-links flex">
+                <a href="#mission" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Mission</a>
+                <a href="#features" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Features</a>
+                <a href="#services" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Services</a>
+                <a href="https://gaiaaiagent.github.io/symbiocenelabs/greenpaper.html" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal" target="_blank">Greenpaper</a>
+            </div>
+            <div class="hamburger-icon md:hidden">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>
         </nav>
+        
+        <!-- Add watershed background as a direct child of body -->
+        <div class="watershed-background">
+            <img src="Cascadia_Rivers_Map_transparent_improved.png" alt="Watershed Map Background">
+        </div>
         
         <div class="container mx-auto">
             <header class="py-0 relative">
@@ -480,7 +490,7 @@
                         </p>
                         <form class="flex flex-col md:flex-row gap-4 items-center">
                             <input type="email" placeholder="Enter your email" class="p-4 border border-gaia-accent-teal/50 rounded-lg w-full focus:ring-2 focus:ring-gaia-accent-teal outline-none" style="background-color: white; color: black;" required>
-                            <button type="submit" class="button p-4 rounded-lg bg-gaia-accent-teal text-white hover:bg-gaia-accent-teal/80 transition w-full md:w-auto">Submit</button>
+                            <button type="submit" class="button w-full md:w-auto">Submit</button>
                         </form>
                     </div>
                 </section>

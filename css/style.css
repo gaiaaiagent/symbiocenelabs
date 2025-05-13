@@ -144,8 +144,8 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    border-bottom: 1px solid rgba(21, 205, 212, 0.5); /* Teal border */
-    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.05) 0%, rgba(21, 205, 212, 0.05) 100%); /* Very subtle teal gradient */
+    border-bottom: 1px solid rgba(21, 205, 212, 0.3); /* Lighter Teal border */
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
 }
 
 .nav-link {
@@ -262,7 +262,7 @@ section {
 
 /* Canvas styling */
 #mycelium-background {
-    position: fixed;
+    position: absolute; /* Absolute position to move with scrolling */
     top: 0;
     left: 0;
     width: 100%;
@@ -289,6 +289,28 @@ section {
     background-color: transparent; /* Remove background color */
     background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%); /* Stronger teal gradient on hover */
     color: var(--gaia-dark-green); /* White text on hover */
+}
+
+/* Specific button styles */
+.button-greenpaper {
+    background-color: rgba(107, 234, 196, 0.5); /* Increased opacity */
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.5) 0%, rgba(21, 205, 212, 0.5) 100%); /* Increased opacity */
+    /* This class should be used in conjunction with .button, e.g., class="button button-greenpaper" */
+}
+
+.button.button-submit-permanent-hover { /* Increased specificity for static state */
+    background-color: transparent;
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%);
+    color: var(--gaia-dark-green); /* Text color, !important removed */
+    transition: none !important; /* Disable transitions for this state */
+    /* This class should be used in conjunction with .button, e.g., class="button button-submit-permanent-hover" */
+}
+
+.button.button-submit-permanent-hover:hover { /* Ensure hover state is identical and maintains specificity */
+    background-color: transparent; /* Consistent with static state */
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%); /* Consistent */
+    color: var(--gaia-dark-green); /* Text color, !important removed */
+    transition: none !important; /* Consistent */
 }
 
 /* Feature Grid */
@@ -325,23 +347,27 @@ footer {
     }
 }
 
-/* Fresh Watershed Background Styles */
-body::before {
-    content: '';
-    display: block; /* Ensure it's treated as a block */
-    position: fixed;
-    top: 380px;
+/* Fresh Watershed Background Styles - Using a different approach */
+.watershed-background {
+    position: absolute; /* Absolute position to move with scrolling */
+    top: 290px; /* Position further down - adjusted to move up slightly */
     left: 0;
     width: 100%;
-    height: 100%;
-    background-image: url('../Cascadia_Rivers_Map_transparent_improved.png'); /* Path relative to css folder */
-    background-repeat: no-repeat;
-    background-position: center 50px; /* Adjusted to move the image down */
-    background-attachment: fixed;
-    background-size: 110%; /* Scale to cover viewport while maintaining aspect ratio, slightly zoomed */
-    z-index: -1; /* Above mycelium canvas (-2), behind body content (default 0) */
-    opacity: 0.25; /* Increased opacity to make it less see-through */
-    transform: none; /* Ensure no rotation */
+    height: auto; /* Let height be determined by the image aspect ratio */
+    z-index: -1; /* Behind content */
+    opacity: 0.25; /* Semi-transparent */
+    pointer-events: none; /* Allow clicks to pass through */
+}
+
+.watershed-background img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Remove the previous body::before style */
+body::before {
+    content: none; /* Disable the previous approach */
 }
 
 @media (min-width: 1024px) {
@@ -360,5 +386,64 @@ body::before {
     
     .lg\:grid-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Hamburger Menu Styles */
+.hamburger-icon {
+    display: none; /* Hidden by default */
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger-icon .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--gaia-text-light);
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+/* Responsive Navigation */
+@media (max-width: 767px) { /* md breakpoint or adjust as needed */
+    .nav-links {
+        display: none; /* Hide links by default on small screens */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100px; /* Adjust based on nav height */
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+        padding: 1rem 0;
+        border-top: 1px solid rgba(21, 205, 212, 0.3);
+        z-index: 10;
+    }
+
+    .nav-links.active {
+        display: flex; /* Show links when active */
+    }
+
+    .nav-links a {
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(21, 205, 212, 0.1);
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    .hamburger-icon {
+        display: block; /* Show hamburger icon on small screens */
+        margin-left: auto; /* Pushes hamburger to the right */
+    }
+
+    /* Adjust main nav container to allow hamburger on the right */
+    nav .container > .flex.items-center {
+        width: 100%; /* Ensure the container takes full width */
+        justify-content: space-between; /* Space between logo/title and hamburger */
+    }
+     nav .container > .flex.items-center > .flex.items-center { /* The group with logo and title */
+        margin-right: auto; /* Pushes nav-links (when visible) or hamburger to the right */
     }
 }

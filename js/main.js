@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.id = 'mycelium-background';
     document.body.insertBefore(canvas, document.body.firstChild);
     
-    // Set canvas to full screen and fixed position
-    canvas.style.position = 'fixed';
+    // Set canvas to full screen and absolute position (to move with scrolling)
+    canvas.style.position = 'absolute';
     canvas.style.top = '0';
     canvas.style.left = '0';
     canvas.style.width = '100%';
-    canvas.style.height = '100%';
+    // canvas.style.height is set by canvas.height attribute in resizeCanvas
     canvas.style.zIndex = '-2'; // Ensure it's behind the watershed pseudo-element
     
     // Get canvas context
@@ -78,8 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
         restrictedZones = []; // Clear previous zones
 
         const elementsToAvoid = [
-            { selector: '.flex.flex-col.gap-1', name: 'Text Block' }
-            // Removed: { selector: '.rivers-map-image', name: 'Rivers Map Image' }
+            { selector: '.flex.flex-col.gap-1', name: 'Text Block' },
+            { selector: '.logo-v', name: 'Logo Image' },
+            { selector: '.text-xl.font-bold', name: 'Site Name' },
+            { selector: 'nav .flex:last-child', name: 'Navigation Links' }
         ];
 
         elementsToAvoid.forEach(item => {
@@ -106,16 +108,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Set canvas size to window size
+    // Set canvas size to cover the entire document
     function resizeCanvas() {
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        
+        // Get the document height to cover the entire page
+        const docHeight = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+        
+        canvas.height = docHeight;
+        canvas.style.height = docHeight + 'px'; // Explicitly set CSS height
         updateRestrictedZones(); // Update restricted zones when canvas resizes
     }
     
     // Call resize initially and on window resize
     resizeCanvas(); // This will also call updateRestrictedZones the first time
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', function() {
+        resizeCanvas();
+        // Re-initialize network after resize to ensure proper distribution
+        initNetwork();
+    });
 
     // Initial update after DOM is ready and styles likely applied
     // A small delay can help ensure elements have their final dimensions
@@ -123,9 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // For images, it's often better to wait for the 'load' event if their size isn't fixed by CSS
     window.addEventListener('load', () => {
         updateRestrictedZones();
-        // Re-initialize network if zones changed significantly after load
-        // This might be too aggressive, but consider if initial placement is off
-        // initNetwork(); 
+        // Re-initialize network after load to ensure proper distribution
+        initNetwork();
     });
     
     // Network parameters
@@ -139,7 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Network structure
     let nodes = [];
     let edges = [];
-    let pulses = [];
     
     // Node class
     class Node {
@@ -208,118 +223,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.opacity = 0.35 + (this.thickness / 4) * 0.55; 
             }
             
-            // Calculate length for pulse animation
+            // Calculate length for gradient animation
             const dx = endNode.x - startNode.x;
             const dy = endNode.y - startNode.y;
             this.length = Math.sqrt(dx * dx + dy * dy);
-        }
-        
-        draw() {
-            ctx.beginPath();
-            ctx.moveTo(this.startNode.x, this.startNode.y);
-            ctx.lineTo(this.endNode.x, this.endNode.y);
             
-            // Color spectrum from light teal to darker teal based on thickness
-            // Thin edges are more light teal, thick edges are more darker teal
-            const tealIntensity = this.thickness / 4; // 0-1 scale based on thickness
-            
-            // Interpolate between new light teal (240,255,253) and new darker teal (176,255,240)
-            const r = Math.round(240 - (64 * tealIntensity)); // 240 -> 176
-            const g = 255; // Green is constant
-            const b = Math.round(253 - (13 * tealIntensity)); // 253 -> 240
-            
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${this.opacity})`;
-            ctx.lineWidth = this.thickness;
-            ctx.stroke();
-        }
-    }
-    
-    // Pulse class for the flowing light effect
-    class Pulse {
-        constructor(edge) {
-            this.edge = edge;
-            this.progress = 0;
-            
-            // Determine if this is a pulse on a small edge
-            const bothSmall = edge.startNode.isSmall && edge.endNode.isSmall;
-            const oneSmall = edge.startNode.isSmall || edge.endNode.isSmall;
-            
-            if (bothSmall) {
-                // Very subtle pulses for small-to-small connections
-                this.speed = 0.04 + Math.random() * 0.08; 
-                this.size = 0.8 + Math.random() * 0.7; 
-                this.opacity = 0.7 + Math.random() * 0.2; // Further Increased opacity
-            } else if (oneSmall) {
-                // Moderate pulses for small-to-regular connections
-                this.speed = 0.05 + Math.random() * 0.12; 
-                this.size = 1.0 + Math.random() * 1.0; 
-                this.opacity = 0.8 + Math.random() * 0.15; // Further Increased opacity
-            } else {
-                // Regular pulses for regular connections
-                this.speed = 0.06 + Math.random() * 0.18; 
-                this.size = 1.5 + Math.random() * 2.5; 
-                this.opacity = 0.9; // Further Increased opacity
-            }
+            // Add gradient animation properties
+            this.gradientProgress = Math.random(); // Random starting position
+            this.gradientSpeed = 0.05 + Math.random() * 0.05; // Randomize speed slightly
         }
         
         update() {
-            this.progress += this.speed / this.edge.length;
-            return this.progress <= 1;
+            // Update gradient position
+            this.gradientProgress += this.gradientSpeed / 100;
+            if (this.gradientProgress > 1) {
+                this.gradientProgress = 0;
+            }
         }
         
         draw() {
-            const startX = this.edge.startNode.x;
-            const startY = this.edge.startNode.y;
-            const endX = this.edge.endNode.x;
-            const endY = this.edge.endNode.y;
+            const startX = this.startNode.x;
+            const startY = this.startNode.y;
+            const endX = this.endNode.x;
+            const endY = this.endNode.y;
             
-            // Calculate current position along the edge
-            const x = startX + (endX - startX) * this.progress;
-            const y = startY + (endY - startY) * this.progress;
+            // Create gradient
+            const gradient = ctx.createLinearGradient(startX, startY, endX, endY);
             
-            // Draw pulse glow - size based on edge type
-            const radius = (1 + this.edge.thickness * 2) * this.size;
-            const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+            // Calculate gradient offset based on animation progress
+            const offset = this.gradientProgress;
             
-            // Teal pulse with varying intensity based on size
-            // Larger pulses are more darker teal, smaller are more light teal
-            const tealIntensity = this.size / 3; // 0-1 scale based on size
+            // Add color stops similar to the text gradient pattern
+            // Shifted by offset to create animation
+            gradient.addColorStop((0 + offset) % 1, '#6beac4');
+            gradient.addColorStop((0.15 + offset) % 1, '#15cdd4');
+            gradient.addColorStop((0.35 + offset) % 1, '#15cdd4');
+            gradient.addColorStop((0.5 + offset) % 1, '#6beac4');
+            gradient.addColorStop((0.5 + offset) % 1, '#6beac4');
+            gradient.addColorStop((0.65 + offset) % 1, '#15cdd4');
+            gradient.addColorStop((0.85 + offset) % 1, '#15cdd4');
+            gradient.addColorStop((1 + offset) % 1, '#6beac4');
             
-            // Center color (interpolates from new light teal (240,255,253) to new dark teal (176,255,240))
-            const r1 = Math.round(240 - (64 * tealIntensity)); // 240 -> 176
-            const g1 = 255;
-            const b1 = Math.round(253 - (13 * tealIntensity)); // 253 -> 240
-            
-            // Mid color (interpolated towards new light teal)
-            const r2 = Math.round(240 - (32 * tealIntensity)); // 240 -> 208
-            const g2 = 255;
-            const b2 = Math.round(253 - (7 * tealIntensity));  // 253 -> 246 (approx)
-            
-            // Adjust color based on opacity
-            const baseColor = `rgba(${r1}, ${g1}, ${b1}, ${this.opacity})`;
-            const fadeColor1 = `rgba(${r2}, ${g2}, ${b2}, ${this.opacity * 0.5})`;
-            const fadeColor2 = `rgba(255, 255, 255, 0)`;
-            
-            gradient.addColorStop(0, baseColor);
-            gradient.addColorStop(0.6, fadeColor1);
-            gradient.addColorStop(1, fadeColor2);
-            
+            // Draw the edge with gradient
             ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fillStyle = gradient;
-            ctx.fill();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            
+            // Apply gradient with opacity
+            ctx.globalAlpha = this.opacity;
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = this.thickness;
+            ctx.stroke();
+            ctx.globalAlpha = 1.0; // Reset global alpha
         }
     }
+    
     
     // Initialize network
     function initNetwork() {
         // Clear existing network
         nodes = [];
         edges = [];
-        pulses = [];
         
-        // Create regular nodes - increased density
-        const regularNodeCount = Math.floor(canvas.width * canvas.height / 1800); // Was 3000
+        // Create regular nodes - reduced density for faster loading
+        const regularNodeCount = Math.floor(canvas.width * canvas.height / 3000); // Reduced density for faster loading
         
         // Create regular nodes
         for (let i = 0; i < regularNodeCount; i++) {
@@ -328,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const padding = 20; // Extra space around the restricted zone for nodes
             do {
                 x = Math.random() * canvas.width;
-                y = Math.random() * (canvas.height * 3); // Nodes can be outside initial viewport
+                y = Math.random() * canvas.height; // Use the full canvas height
                 attempts++;
                 if (attempts > MAX_NODE_PLACEMENT_ATTEMPTS) {
                     console.warn("Max attempts reached for placing a regular node outside restricted zones.");
@@ -340,8 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
             nodes.push(new Node(x, y, false)); // false = regular node
         }
         
-        // Create additional small nodes - significantly more, increased density
-        const smallNodeCount = Math.floor(canvas.width * canvas.height / 600); // Was 1000
+        // Create additional small nodes - reduced density for faster loading
+        const smallNodeCount = Math.floor(canvas.width * canvas.height / 1000); // Reduced density for faster loading
         
         // Create small nodes
         for (let i = 0; i < smallNodeCount; i++) {
@@ -350,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const padding = 15; // Smaller padding for smaller nodes
             do {
                 x = Math.random() * canvas.width;
-                y = Math.random() * (canvas.height * 3);
+                y = Math.random() * canvas.height; // Use the full canvas height
                 attempts++;
                 if (attempts > MAX_NODE_PLACEMENT_ATTEMPTS) {
                     console.warn("Max attempts reached for placing a small node outside restricted zones.");
@@ -417,21 +384,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Create new pulse randomly
-    function createPulse() {
-        if (edges.length > 0 && Math.random() < 0.45) { // Significantly increased pulse frequency
-            const randomEdge = edges[Math.floor(Math.random() * edges.length)];
-            pulses.push(new Pulse(randomEdge));
-        }
-    }
     
-    // Update network for scrolling
+    // Update network for scrolling and animations
     function updateNetwork() {
-        // Update pulses
-        pulses = pulses.filter(pulse => pulse.update());
-        
-        // Create new pulses
-        createPulse();
+        // Update edge gradients
+        edges.forEach(edge => edge.update());
     }
     
     // Draw the entire network
@@ -445,9 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Draw nodes
         nodes.forEach(node => node.draw());
-        
-        // Draw pulses
-        pulses.forEach(pulse => pulse.draw());
     }
     
     // Animation loop
@@ -457,13 +411,25 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animate);
     }
     
-    // Handle scrolling - adjust node positions
+    // Handle scrolling
     window.addEventListener('scroll', function() {
         const scrollY = window.scrollY;
-        // No need to adjust canvas position as it's fixed
+        // No need to adjust canvas position as it's absolute and moves with scrolling
     });
     
     // Initialize and start animation
     initNetwork();
     animate();
+});
+
+// Hamburger Menu Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger-icon');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    }
 });
