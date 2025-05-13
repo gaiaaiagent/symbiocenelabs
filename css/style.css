@@ -404,6 +404,13 @@ body::before {
     transition: 0.4s;
 }
 
+/* Desktop Navigation */
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex; /* Show links by default on desktop */
+    }
+}
+
 /* Responsive Navigation */
 @media (max-width: 767px) { /* md breakpoint or adjust as needed */
     .nav-links {
