@@ -149,10 +149,30 @@
             .text-gaia-accent-teal {
                 --tw-text-opacity: 1;
                 color: rgb(21 205 212 / var(--tw-text-opacity)); /* Teal text */
-                background: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
+                background: linear-gradient(to right, 
+                    #6beac4 0%, 
+                    #15cdd4 15%, /* Start of dark plateau */
+                    #15cdd4 35%, /* End of dark plateau */
+                    #6beac4 50%, /* End of first wave, back to light */
+                    #6beac4 50%, /* Start of second wave (repeat for seamlessness) */
+                    #15cdd4 65%, /* Start of dark plateau in second wave */
+                    #15cdd4 85%, /* End of dark plateau in second wave */
+                    #6beac4 100% /* End of second wave, back to light */
+                );
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                background-size: 200% auto; /* Gradient is defined over 2x element width */
+                animation: gradient-wave 6s linear infinite; /* Slower animation */
+            }
+
+            @keyframes gradient-wave {
+                0% {
+                    background-position: 0% 50%;
+                }
+                100% {
+                    background-position: -100% 50%; /* Shift by one full wave (100% of element width, 50% of gradient width) */
+                }
             }
             
             .border-gaia-accent-teal {
