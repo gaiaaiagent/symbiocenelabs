@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Symbiocene Labs - Planetary Data Layer for Earth System Monitoring</title>
+        <meta name="description" content="Symbiocene Labs interprets, collates, and indexes disparate data feeds that monitor earth systems, facilitating capital investment in ecosystem regeneration and creating a sustainable future."/>
+        <meta name="author" content="Symbiocene Labs"/>
+        <meta property="og:title" content="Symbiocene Labs - Planetary Data Layer"/>
+        <meta property="og:description" content="Symbiocene Labs interprets, collates, and indexes disparate data feeds that monitor earth systems, facilitating capital investment in ecosystem regeneration and creating a sustainable future."/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/15d62c79-b091-490c-9016-6587f93cbaed/id-preview-7203a951--f4794e7a-9c32-4fa6-a52f-6cd08ad04d61.lovable.app-1746590013152.png"/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" content="@gaiaaiagent"/>
+        <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/15d62c79-b091-490c-9016-6587f93cbaed/id-preview-7203a951--f4794e7a-9c32-4fa6-a52f-6cd08ad04d61.lovable.app-1746590013152.png"/>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/main.js"></script>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+            @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+            
+            :root {
+                --background: 0 0% 100%; /* White */
+                --foreground: 0 0% 0%; /* Black */
+                --card: 60 100% 97%; /* Light yellow */
+                --card-foreground: 0 0% 0%; /* Black */
+                --popover: 0 0% 100%; /* White */
+                --popover-foreground: 0 0% 0%; /* Black */
+                --primary: 51 100% 50%; /* Gold */
+                --primary-foreground: 0 0% 100%; /* White */
+                --secondary: 60 80% 90%; /* Light yellow */
+                --secondary-foreground: 0 0% 0%; /* Black */
+                --muted: 60 30% 90%; /* Very light yellow */
+                --muted-foreground: 0 0% 40%; /* Dark gray */
+                --accent: 51 100% 60%; /* Lighter gold */
+                --accent-foreground: 0 0% 0%; /* Black */
+                --destructive: 0 62.8% 30.6%; /* Red */
+                --destructive-foreground: 0 0% 100%; /* White */
+                --border: 51 40% 50%; /* Gold border */
+                --input: 51 40% 50%; /* Gold input */
+                --ring: 51 100% 50%; /* Gold ring */
+                --radius: .5rem;
+                --sidebar-background: 0 0% 100%; /* White */
+                --sidebar-foreground: 0 0% 0%; /* Black */
+                --sidebar-primary: 51 100% 50%; /* Gold */
+                --sidebar-primary-foreground: 0 0% 100%; /* White */
+                --sidebar-accent: 60 30% 90%; /* Light yellow */
+                --sidebar-accent-foreground: 0 0% 0%; /* Black */
+                --sidebar-border: 51 40% 50%; /* Gold border */
+                --sidebar-ring: 51 100% 50%; /* Gold ring */
+            }
+            
+            * {
+                box-sizing: border-box;
+                border-width: 0;
+                border-style: solid;
+                border-color: hsl(var(--border));
+            }
+            
+            body {
+                --tw-bg-opacity: 1;
+                background-color: rgb(255 255 255 / var(--tw-bg-opacity)); /* White background */
+                font-family: Inter, sans-serif;
+                --tw-text-opacity: 1;
+                color: rgb(0 0 0 / var(--tw-text-opacity)); /* Black text */
+                margin: 0;
+                line-height: inherit;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                font-family: Space Mono, monospace;
+                font-size: inherit;
+                font-weight: inherit;
+            }
+            
+            .container {
+                width: 100%;
+                margin-right: auto;
+                margin-left: auto;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+            
+            @media (min-width: 1400px) {
+                .container {
+                    max-width: 1400px;
+                }
+            }
+            
+            .pixel-box {
+                position: relative;
+                overflow: hidden;
+                border-radius: 0;
+                background-color: rgba(224, 247, 245, 0.8); /* Very light teal background */
+                padding: 1.5rem;
+                border: 1px solid rgba(21, 205, 212, 0.5); /* Teal border */
+                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%); /* Subtle teal gradient */
+                clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+            }
+            
+            .pixel-dot {
+                margin-left: .125rem;
+                margin-right: .125rem;
+                display: inline-block;
+                height: .375rem;
+                width: .375rem;
+                border-radius: 0;
+                --tw-bg-opacity: 1;
+                background-color: rgb(21 205 212 / var(--tw-bg-opacity)); /* Teal dot */
+                background-image: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
+            }
+            
+            .data-grid {
+                /* Grid background removed and replaced with canvas in JS */
+                background-color: rgb(255 255 255 / var(--tw-bg-opacity)); /* White background */
+            }
+            
+            .animate-pixel-fade {
+                animation: pixel-fade 3s ease-in-out infinite;
+            }
+            
+            @keyframes pixel-fade {
+                0% {
+                    opacity: .4;
+                }
+                50% {
+                    opacity: 1;
+                }
+                to {
+                    opacity: .4;
+                }
+            }
+            
+            .bg-gaia-dark-green {
+                --tw-bg-opacity: 1;
+                background-color: rgb(255 255 255 / var(--tw-bg-opacity)); /* White background */
+            }
+            
+            .bg-gaia-accent-teal {
+                --tw-bg-opacity: 1;
+                background-color: rgb(21 205 212 / var(--tw-bg-opacity)); /* Teal background */
+            }
+            
+            .text-gaia-text-light {
+                --tw-text-opacity: 1;
+                color: rgb(0 0 0 / var(--tw-text-opacity)); /* Black text */
+            }
+            
+            .text-gaia-accent-teal {
+                --tw-text-opacity: 1;
+                color: rgb(21 205 212 / var(--tw-text-opacity)); /* Teal text */
+                background: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            .border-gaia-accent-teal {
+                --tw-border-opacity: 1;
+                border-color: rgb(21 205 212 / var(--tw-border-opacity)); /* Teal border */
+            }
+            
+            .py-16 {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+            
+            .py-8 {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            
+            .px-4 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .mt-8 {
+                margin-top: 2rem;
+            }
+            
+            .mb-4 {
+                margin-bottom: 1rem;
+            }
+            
+            .mb-8 {
+                margin-bottom: 2rem;
+            }
+            
+            .text-4xl {
+                font-size: 2.25rem;
+                line-height: 2.5rem;
+            }
+            
+            .text-xl {
+                font-size: 1.25rem;
+                line-height: 1.75rem;
+            }
+            
+            .text-lg {
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+            }
+            
+            .font-bold {
+                font-weight: 700;
+            }
+            
+            .flex {
+                display: flex;
+            }
+            
+            .flex-col {
+                flex-direction: column;
+            }
+            
+            .items-center {
+                align-items: center;
+            }
+            
+            .justify-center {
+                justify-content: center;
+            }
+            
+            .justify-between {
+                justify-content: space-between;
+            }
+            
+            .gap-4 {
+                gap: 1rem;
+            }
+            
+            .gap-8 {
+                gap: 2rem;
+            }
+            
+            .grid {
+                display: grid;
+            }
+            
+            .grid-cols-1 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
+            @media (min-width: 768px) {
+                .md\:grid-cols-2 {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+                
+                .md\:text-5xl {
+                    font-size: 3rem;
+                    line-height: 1;
+                }
+            }
+            
+            @media (min-width: 1024px) {
+                .lg\:grid-cols-3 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+                
+                .lg\:text-6xl {
+                    font-size: 3.75rem;
+                    line-height: 1;
+                }
+            }
+            
+            .max-w-4xl {
+                max-width: 56rem;
+            }
+            
+            .mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .text-center {
+                text-align: center;
+            }
+            
+            .rounded-lg {
+                border-radius: var(--radius);
+            }
+            
+            .border {
+                border-width: 1px;
+            }
+            
+            .border-b {
+                border-bottom-width: 1px;
+            }
+            
+            .border-gaia-accent-teal\/50 {
+                border-color: rgba(21, 205, 212, 0.5); /* Teal border with opacity */
+            }
+            
+            .bg-gaia-accent-teal\/10 {
+                background-color: rgba(21, 205, 212, 0.1); /* Teal background with opacity */
+                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%); /* Subtle teal gradient */
+            }
+            
+            .p-4 {
+                padding: 1rem;
+            }
+            
+            .hover\:bg-gaia-accent-teal\/80:hover {
+                background-color: rgba(21, 205, 212, 0.8); /* Teal background with opacity on hover */
+                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%); /* Stronger teal gradient */
+            }
+            
+            .hover\:text-gaia-dark-green:hover {
+                --tw-text-opacity: 1;
+                color: rgb(255 255 255 / var(--tw-text-opacity)); /* White text on hover */
+            }
+            
+            .hover\:text-gaia-accent-teal:hover {
+                background: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            .transition {
+                transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+                transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+                transition-duration: .15s;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem;
+                transition: color 0.3s ease;
+            }
+            
+            .logo-circle {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                /* border: 2px solid transparent; */ /* Transparent border */
+                /* border-image: linear-gradient(to right, #6beac4, #15cdd4); */ /* Teal gradient border */
+                /* border-image-slice: 1; */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 10px;
+                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.05) 0%, rgba(21, 205, 212, 0.05) 100%); /* Very subtle teal gradient */
+            }
+            
+            .logo-v {
+                background: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+                font-size: 24px;
+                font-weight: bold;
+                font-family: 'Space Mono', monospace;
+            }
+            
+            /* Rivers map styling */
+            .rivers-map-container {
+                display: flex;
+                justify-content: center;
+                align-items: center; 
+                width: 100%;
+                max-width: 900px;
+                margin-top: -2rem;    /* Reduced negative top margin for responsiveness */
+                margin-bottom: -5rem; /* Kept aggressive bottom margin */
+                margin-left: auto;
+                margin-right: auto;
+                opacity: 0.9; 
+            }
+
+            .rivers-map-image-wrapper {
+                width: 100%; 
+                height: 350px; 
+                overflow: hidden;
+                position: relative; 
+                /* border: 1px solid red; */ /* For debugging */
+            }
+            
+            .rivers-map-image {
+                width: 100%; 
+                height: auto;
+                max-width: none; 
+                max-height: none;
+                display: block; 
+                transform: rotate(-45deg) scale(0.9); 
+                transform-origin: center center; 
+                opacity: 0.9;
+                position: relative; 
+                left: 0%; 
+                top: -75%;  
+                /* border: 1px solid blue; */ /* For debugging */
+            }
+            
+            /* Responsive adjustments for the rivers map */
+            @media (max-width: 768px) {
+                .rivers-map-container {
+                    max-width: 600px;
+                    opacity: 0.8;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .rivers-map-container {
+                    max-width: 400px;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-gaia-dark-green data-grid">
+        <nav class="py-8 border-b border-gaia-accent-teal/50">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="logo-circle">
+                        <img src="U9sK4_m8_400x400.jpg" alt="Symbiocene Labs Logo" class="logo-v">
+                    </div>
+                    <span class="text-xl font-bold">Symbiocene Labs</span>
+                </div>
+                <div class="flex">
+                    <a href="#mission" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Mission</a>
+                    <a href="#features" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Features</a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container mx-auto">
+            <header class="py-0 relative">
+                <div class="mb-2">
+                    <p class="text-gaia-accent-teal">■AI DATA SERVICE PROVIDER■</p>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gaia-text-light">
+                        Augmenting Earth's<br>
+                        <span class="text-gaia-accent-teal">Natural</span><br>
+                        <span class="text-gaia-accent-teal">Intelligence</span>
+                    </h1>
+                    <p class="text-xl text-gaia-text-light max-w-4xl mb-0">
+                        Symbiocene Labs collects and analyzes data to power regenerative systems globally.
+                        Our AI agent ecosystem connects diverse data sources, facilitating impact
+                        investment and creating measurable pathways to a regenerative future.
+                    </p>
+                </div>
+                <div class="rivers-map-container">
+                    <div class="rivers-map-image-wrapper">
+                        <img src="Cascadia_Rivers_Map_transparent_improved.png" alt="Cascadia Rivers Map" class="rivers-map-image">
+                    </div>
+                </div>
+            </header>
+            
+            <main style="margin-top: 0;">
+                <section id="mission" class="pixel-box mb-8">
+                    <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4">Our Mission</h2>
+                    <p class="text-gaia-text-light mb-4">
+                        Symbiocene Labs interprets, collates, and indexes disparate data feeds that monitor earth systems,
+                        facilitating capital investment in ecosystem regeneration and creating a sustainable future.
+                    </p>
+                    <p class="text-gaia-text-light">
+                        We aim to catalyze exponential regeneration by integrating ecological, social, and technological 
+                        systems to inspire collective action toward planetary healing.
+                    </p>
+                </section>
+                
+                <section id="features" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4">Key Features</h2>
+                    <div class="feature-grid">
+                        <div class="pixel-box">
+                            <h3 class="text-xl font-bold text-gaia-accent-teal mb-2">Knowledge Commons</h3>
+                            <p class="text-gaia-text-light">
+                                Decentralized knowledge repositories that democratize access to regenerative wisdom while 
+                                respecting the principles of knowledge commoning.
+                            </p>
+                        </div>
+                        <div class="pixel-box">
+                            <h3 class="text-xl font-bold text-gaia-accent-teal mb-2">Bioregional Intelligence</h3>
+                            <p class="text-gaia-text-light">
+                                AI that is grounded in specific places and their unique ecological and cultural contexts, 
+                                enabling bidirectional flows of resources and knowledge.
+                            </p>
+                        </div>
+                        <div class="pixel-box">
+                            <h3 class="text-xl font-bold text-gaia-accent-teal mb-2">Swarm Council</h3>
+                            <p class="text-gaia-text-light">
+                                Composed of interoperable, upgradeable agents, each with specialized domain expertise, 
+                                arriving at consensus insights by identifying patterns.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="ecosystem" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4">The Symbiocene Vision</h2>
+                    <div class="pixel-box">
+                        <p class="text-gaia-text-light mb-4">
+                            We aim to usher in a new era of planetary stewardship and civilizational evolution—The Symbiocene—where 
+                            biological and digital intelligence collaborate to regenerate the Earth's biosphere for the benefit of all life.
+                        </p>
+                        <p class="text-gaia-text-light">
+                            This vision represents a fundamental shift from the extractive paradigms of the past toward a future of 
+                            abundance through regeneration.
+                        </p>
+                    </div>
+                </section>
+                
+                <section id="community" class="mb-8">
+                    <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4">Get Involved</h2>
+                    <div class="flex flex-col items-center gap-4">
+                        <p class="text-gaia-text-light text-center max-w-4xl">
+                            Join us as we chart a path of exponential regeneration and shape a more abundant, equitable future for all life on Earth.
+                        </p>
+                        <a href="greenpaper.html" class="button">
+                            Read the Greenpaper
+                        </a>
+                    </div>
+                </section>
+            </main>
+            
+            <footer class="py-8 text-center">
+                <p class="text-gaia-text-light/70">
+                    &copy; 2025 Symbiocene Labs - Catalyzing Exponential Regeneration
+                </p>
+            </footer>
+        </div>
+    </body>
+</html>
