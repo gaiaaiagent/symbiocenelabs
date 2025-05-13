@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
         restrictedZones = []; // Clear previous zones
 
         const elementsToAvoid = [
-            { selector: '.flex.flex-col.gap-1', name: 'Text Block' },
-            { selector: '.rivers-map-image', name: 'Rivers Map Image' }
+            { selector: '.flex.flex-col.gap-1', name: 'Text Block' }
+            // Removed: { selector: '.rivers-map-image', name: 'Rivers Map Image' }
         ];
 
         elementsToAvoid.forEach(item => {
