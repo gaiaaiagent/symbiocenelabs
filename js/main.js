@@ -164,13 +164,13 @@ document.addEventListener('DOMContentLoaded', function() {
             this.isSmall = isSmall;
             
             if (isSmall) {
-                // Small nodes (0.2-1.2px) - slightly smaller
-                this.radius = 0.2 + Math.random() * 1.0;
+                // Small nodes (0.4-1.2px) - increased minimum size to eliminate very tiny nodes
+                this.radius = 0.4 + Math.random() * 0.8;
                 // Lower opacity for small nodes to reduce visual weight
                 this.opacity = 0.15 + Math.random() * 0.2; 
             } else {
-                // Regular nodes with less variation (0.5-4px) - smaller on average
-                this.radius = 0.5 + Math.random() * 3.5;
+                // Regular nodes with less variation (0.8-4px) - increased minimum size
+                this.radius = 0.8 + Math.random() * 3.2;
                 // Adjusted opacity for regular nodes
                 this.opacity = 0.3 + (this.radius / 4) * 0.5; 
             }
@@ -207,20 +207,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const oneSmall = startNode.isSmall || endNode.isSmall;
             
             if (bothSmall) {
-                // Very thin edges between small nodes (0.1-0.3px) - thinner
-                this.thickness = 0.1 + Math.random() * 0.2;
-                // Lower opacity for small-to-small connections
-                this.opacity = 0.1 + Math.random() * 0.15; 
+                // Slightly thicker edges between small nodes (0.2-0.4px) - increased minimum thickness
+                this.thickness = 0.2 + Math.random() * 0.2;
+                // Increased opacity for small-to-small connections for better visibility
+                this.opacity = 0.15 + Math.random() * 0.15; 
             } else if (oneSmall) {
-                // Thin edges for connections to small nodes (0.1-0.6px) - thinner
-                this.thickness = 0.1 + Math.random() * 0.5;
-                // Lower opacity for small connections
-                this.opacity = 0.15 + Math.random() * 0.25; 
+                // Thin edges for connections to small nodes (0.2-0.7px) - increased minimum thickness
+                this.thickness = 0.2 + Math.random() * 0.5;
+                // Increased opacity for small connections
+                this.opacity = 0.2 + Math.random() * 0.25; 
             } else {
-                // Regular edges with less variation (0.2-2px) - thinner
-                this.thickness = 0.2 + Math.random() * 1.8;
+                // Regular edges with less variation (0.3-2px) - increased minimum thickness
+                this.thickness = 0.3 + Math.random() * 1.7;
                 // Adjusted opacity for regular edges
-                this.opacity = 0.25 + (this.thickness / 2) * 0.4; 
+                this.opacity = 0.3 + (this.thickness / 2) * 0.4; 
             }
             
             // Calculate length for gradient animation
@@ -285,8 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
         nodes = [];
         edges = [];
         
-    // Create regular nodes - moderate density with focus on smaller nodes
-    const regularNodeCount = Math.floor(canvas.width * canvas.height / 6000); // Moderate density with smaller nodes
+    // Create regular nodes - reduced density for better performance
+    const regularNodeCount = Math.floor(canvas.width * canvas.height / 8000); // Reduced density of regular nodes
     
     // Create regular nodes
         for (let i = 0; i < regularNodeCount; i++) {
@@ -307,8 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
             nodes.push(new Node(x, y, false)); // false = regular node
         }
         
-    // Create additional small nodes - significantly increased density of small nodes
-    const smallNodeCount = Math.floor(canvas.width * canvas.height / 800); // High density of small nodes for visual richness
+    // Create additional small nodes - reduced density of small nodes to improve performance
+    const smallNodeCount = Math.floor(canvas.width * canvas.height / 2000); // Reduced density of small nodes
         
         // Create small nodes
         for (let i = 0; i < smallNodeCount; i++) {
@@ -341,17 +341,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     const dy = otherNode.y - node.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     
-                    // Different connection rules based on node types
+                    // Different connection rules based on node types - reduced connections for better performance
                     let shouldConnect = false;
                     
                     if (node.isSmall && otherNode.isSmall) {
-                        // Small nodes connect at longer distances with more connections
-                        shouldConnect = distance < 120 && node.connections.length < 8 && otherNode.connections.length < 8;
+                        // Small nodes connect at shorter distances with fewer connections
+                        shouldConnect = distance < 100 && node.connections.length < 4 && otherNode.connections.length < 4;
                     } else if (node.isSmall || otherNode.isSmall) {
-                        // Mixed connections (small to regular) - increased distance and connections
-                        shouldConnect = distance < 150 && node.connections.length < 6 && otherNode.connections.length < 6;
+                        // Mixed connections (small to regular) - reduced distance and connections
+                        shouldConnect = distance < 130 && node.connections.length < 5 && otherNode.connections.length < 5;
                     } else {
-                        // Regular nodes - increased distance and connections
+                        // Regular nodes - prioritize these connections
                         shouldConnect = distance < 180 && node.connections.length < 4 && otherNode.connections.length < 4;
                     }
 
@@ -397,11 +397,17 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Draw edges
-        edges.forEach(edge => edge.draw());
+        // Sort edges by thickness (largest first)
+        const sortedEdges = [...edges].sort((a, b) => b.thickness - a.thickness);
         
-        // Draw nodes
-        nodes.forEach(node => node.draw());
+        // Draw edges (largest first)
+        sortedEdges.forEach(edge => edge.draw());
+        
+        // Sort nodes by radius (largest first)
+        const sortedNodes = [...nodes].sort((a, b) => b.radius - a.radius);
+        
+        // Draw nodes (largest first)
+        sortedNodes.forEach(node => node.draw());
     }
     
     // Animation loop
