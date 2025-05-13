@@ -23,7 +23,7 @@
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    background-color: red !important; /* TEST: Force red background */
+    background-color: var(--gaia-dark-green); /* Restore original background */
     color: var(--gaia-text-light);
     /* Removed position: relative and z-index: 0 */
 }
@@ -325,7 +325,24 @@ footer {
     }
 }
 
-/* Removed watershed background styles for testing */
+/* Fresh Watershed Background Styles */
+body::before {
+    content: '';
+    display: block; /* Ensure it's treated as a block */
+    position: fixed;
+    top: 380px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../Cascadia_Rivers_Map_transparent_improved.png'); /* Path relative to css folder */
+    background-repeat: no-repeat;
+    background-position: center 50px; /* Adjusted to move the image down */
+    background-attachment: fixed;
+    background-size: 110%; /* Scale to cover viewport while maintaining aspect ratio, slightly zoomed */
+    z-index: -1; /* Above mycelium canvas (-2), behind body content (default 0) */
+    opacity: 0.25; /* Increased opacity to make it less see-through */
+    transform: none; /* Ensure no rotation */
+}
 
 @media (min-width: 1024px) {
     .feature-grid {

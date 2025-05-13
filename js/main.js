@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.style.left = '0';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.style.zIndex = '-1';
+    canvas.style.zIndex = '-2'; // Ensure it's behind the watershed pseudo-element
     
     // Get canvas context
     const ctx = canvas.getContext('2d');
