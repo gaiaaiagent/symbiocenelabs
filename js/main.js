@@ -164,15 +164,15 @@ document.addEventListener('DOMContentLoaded', function() {
             this.isSmall = isSmall;
             
             if (isSmall) {
-                // Small nodes (0.2-1.5px)
-                this.radius = 0.2 + Math.random() * 1.3;
-                // Further Increased opacity for small nodes
-                this.opacity = 0.2 + Math.random() * 0.2; 
+                // Small nodes (0.2-1.2px) - slightly smaller
+                this.radius = 0.2 + Math.random() * 1.0;
+                // Lower opacity for small nodes to reduce visual weight
+                this.opacity = 0.15 + Math.random() * 0.2; 
             } else {
-                // Regular nodes with more variation (0.5-8px)
-                this.radius = 0.5 + Math.random() * 7.5;
-                // Further Increased opacity for regular nodes
-                this.opacity = 0.4 + (this.radius / 8) * 0.55; 
+                // Regular nodes with less variation (0.5-4px) - smaller on average
+                this.radius = 0.5 + Math.random() * 3.5;
+                // Adjusted opacity for regular nodes
+                this.opacity = 0.3 + (this.radius / 4) * 0.5; 
             }
             
             this.connections = [];
@@ -207,20 +207,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const oneSmall = startNode.isSmall || endNode.isSmall;
             
             if (bothSmall) {
-                // Very thin edges between small nodes (0.1-0.5px)
-                this.thickness = 0.1 + Math.random() * 0.4;
-                // Further Increased opacity for small-to-small connections
-                this.opacity = 0.15 + Math.random() * 0.15; 
+                // Very thin edges between small nodes (0.1-0.3px) - thinner
+                this.thickness = 0.1 + Math.random() * 0.2;
+                // Lower opacity for small-to-small connections
+                this.opacity = 0.1 + Math.random() * 0.15; 
             } else if (oneSmall) {
-                // Thin edges for connections to small nodes (0.2-1px)
-                this.thickness = 0.2 + Math.random() * 0.8;
-                // Further Increased opacity for small connections
-                this.opacity = 0.25 + Math.random() * 0.3; 
+                // Thin edges for connections to small nodes (0.1-0.6px) - thinner
+                this.thickness = 0.1 + Math.random() * 0.5;
+                // Lower opacity for small connections
+                this.opacity = 0.15 + Math.random() * 0.25; 
             } else {
-                // Regular edges with more variation (0.2-4px)
-                this.thickness = 0.2 + Math.random() * 3.8;
-                // Further Increased opacity for regular edges
-                this.opacity = 0.35 + (this.thickness / 4) * 0.55; 
+                // Regular edges with less variation (0.2-2px) - thinner
+                this.thickness = 0.2 + Math.random() * 1.8;
+                // Adjusted opacity for regular edges
+                this.opacity = 0.25 + (this.thickness / 2) * 0.4; 
             }
             
             // Calculate length for gradient animation
@@ -285,10 +285,10 @@ document.addEventListener('DOMContentLoaded', function() {
         nodes = [];
         edges = [];
         
-        // Create regular nodes - reduced density for faster loading
-        const regularNodeCount = Math.floor(canvas.width * canvas.height / 3000); // Reduced density for faster loading
-        
-        // Create regular nodes
+    // Create regular nodes - moderate density with focus on smaller nodes
+    const regularNodeCount = Math.floor(canvas.width * canvas.height / 6000); // Moderate density with smaller nodes
+    
+    // Create regular nodes
         for (let i = 0; i < regularNodeCount; i++) {
             let x, y, attempts = 0;
             const MAX_NODE_PLACEMENT_ATTEMPTS = 50; // Prevent infinite loop
@@ -307,8 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
             nodes.push(new Node(x, y, false)); // false = regular node
         }
         
-        // Create additional small nodes - reduced density for faster loading
-        const smallNodeCount = Math.floor(canvas.width * canvas.height / 1000); // Reduced density for faster loading
+    // Create additional small nodes - significantly increased density of small nodes
+    const smallNodeCount = Math.floor(canvas.width * canvas.height / 800); // High density of small nodes for visual richness
         
         // Create small nodes
         for (let i = 0; i < smallNodeCount; i++) {
@@ -345,14 +345,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     let shouldConnect = false;
                     
                     if (node.isSmall && otherNode.isSmall) {
-                        // Small nodes connect at shorter distances but can have more connections
-                        shouldConnect = distance < 100 && node.connections.length < 8 && otherNode.connections.length < 8;
+                        // Small nodes connect at longer distances with more connections
+                        shouldConnect = distance < 120 && node.connections.length < 8 && otherNode.connections.length < 8;
                     } else if (node.isSmall || otherNode.isSmall) {
-                        // Mixed connections (small to regular)
+                        // Mixed connections (small to regular) - increased distance and connections
                         shouldConnect = distance < 150 && node.connections.length < 6 && otherNode.connections.length < 6;
                     } else {
-                        // Regular nodes - maintain current behavior
-                        shouldConnect = distance < 180 && node.connections.length < 5 && otherNode.connections.length < 5;
+                        // Regular nodes - increased distance and connections
+                        shouldConnect = distance < 180 && node.connections.length < 4 && otherNode.connections.length < 4;
                     }
 
                     // Additional check: do not connect if the edge would cross any restricted zone
