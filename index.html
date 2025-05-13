@@ -59,7 +59,7 @@
             
             body {
                 --tw-bg-opacity: 1;
-                background-color: rgb(255 255 255 / var(--tw-bg-opacity)); /* White background */
+                /* background-color: rgb(255 255 255 / var(--tw-bg-opacity)); */ /* White background - Commented out for testing external CSS */
                 font-family: Inter, sans-serif;
                 --tw-text-opacity: 1;
                 color: rgb(0 0 0 / var(--tw-text-opacity)); /* Black text */
@@ -354,57 +354,6 @@
                 font-weight: bold;
                 font-family: 'Space Mono', monospace;
             }
-            
-            /* Rivers map styling */
-            .rivers-map-container {
-                display: flex;
-                justify-content: center;
-                align-items: center; 
-                width: 100%;
-                max-width: 900px;
-                margin-top: -2rem;    /* Reduced negative top margin for responsiveness */
-                margin-bottom: -5rem; /* Kept aggressive bottom margin */
-                margin-left: auto;
-                margin-right: auto;
-                opacity: 0.9; 
-            }
-
-            .rivers-map-image-wrapper {
-                width: 100%; 
-                height: 350px; 
-                overflow: hidden;
-                position: relative; 
-                /* border: 1px solid red; */ /* For debugging */
-            }
-            
-            .rivers-map-image {
-                width: 100%; 
-                height: auto;
-                max-width: none; 
-                max-height: none;
-                display: block; 
-                transform: rotate(-45deg) scale(0.9); 
-                transform-origin: center center; 
-                opacity: 0.9;
-                position: relative; 
-                left: 0%; 
-                top: -75%;  
-                /* border: 1px solid blue; */ /* For debugging */
-            }
-            
-            /* Responsive adjustments for the rivers map */
-            @media (max-width: 768px) {
-                .rivers-map-container {
-                    max-width: 600px;
-                    opacity: 0.8;
-                }
-            }
-            
-            @media (max-width: 480px) {
-                .rivers-map-container {
-                    max-width: 400px;
-                }
-            }
         </style>
     </head>
     <body class="bg-gaia-dark-green data-grid">
@@ -441,14 +390,10 @@
                         investment and creating measurable pathways to a regenerative future.
                     </p>
                 </div>
-                <div class="rivers-map-container">
-                    <div class="rivers-map-image-wrapper">
-                        <img src="Cascadia_Rivers_Map_transparent_improved.png" alt="Cascadia Rivers Map" class="rivers-map-image">
-                    </div>
-                </div>
+                <!-- Removed rivers map container and image from here, it's now handled by CSS background -->
             </header>
             
-            <main style="margin-top: 0;">
+            <main>
                 <section id="mission" class="pixel-box mb-8">
                     <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4">Our Mission</h2>
                     <p class="text-gaia-text-light mb-4">

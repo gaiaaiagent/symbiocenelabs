@@ -23,8 +23,9 @@
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    background-color: var(--gaia-dark-green);
+    background-color: red !important; /* TEST: Force red background */
     color: var(--gaia-text-light);
+    /* Removed position: relative and z-index: 0 */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -266,7 +267,7 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -2; /* Behind watershed */
 }
 
 /* Buttons */
@@ -323,6 +324,8 @@ footer {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
+
+/* Removed watershed background styles for testing */
 
 @media (min-width: 1024px) {
     .feature-grid {
