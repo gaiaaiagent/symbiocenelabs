@@ -415,9 +415,24 @@
                         <span class="text-gaia-accent-teal">Natural</span>
                         <span class="text-gaia-accent-teal">Intelligence</span>
                     </h2>
-                    <p class="text-xl text-gaia-text-light mb-0">
+                    <p class="text-xl text-gaia-text-light mb-4">
                         Symbiocene Labs is a decentralized intelligence uniting AI-driven data processing with the wisdom of local communities and global networks. We accelerate our transition to the Symbiocene—an era where biological and digital intelligence collaborate symbiotically to regenerate Earth's biosphere for the benefit of all.
                     </p>
+                    
+                    <!-- Chatbot Section -->
+                    <div class="pixel-box mt-4 mb-4">
+                        <h3 class="text-xl font-bold text-gaia-accent-teal mb-4">Talk to Gaia</h3>
+                        <form id="chatbot-form" class="flex flex-col md:flex-row gap-2 items-center">
+                            <input type="text" id="chat-prompt" placeholder="Ask about regenerative practices, bioregionalism, or AI for planetary healing..." 
+                                   class="p-4 border border-gaia-accent-teal/50 rounded-lg w-full focus:ring-2 focus:ring-gaia-accent-teal outline-none" 
+                                   style="background-color: white; color: black;" required>
+                            <button type="submit" class="button button-submit-permanent-hover" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <!-- Removed rivers map container and image from here, it's now handled by CSS background -->
             </header>
@@ -514,5 +529,28 @@
                 </p>
             </footer>
         </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle chatbot form submission
+            const chatbotForm = document.getElementById('chatbot-form');
+            const chatPromptInput = document.getElementById('chat-prompt');
+            
+            if (chatbotForm && chatPromptInput) {
+                chatbotForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const prompt = chatPromptInput.value.trim();
+                    if (prompt) {
+                        // Open chat.html in a new tab with the prompt as a query parameter
+                        const chatUrl = `chat.html?prompt=${encodeURIComponent(prompt)}`;
+                        window.open(chatUrl, '_blank');
+                        
+                        // Clear the input field
+                        chatPromptInput.value = '';
+                    }
+                });
+            }
+        });
+    </script>
     </body>
 </html>
