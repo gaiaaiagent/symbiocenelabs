@@ -131,17 +131,27 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', function() {
         resizeCanvas();
         // Re-initialize network after resize to ensure proper distribution
-        initNetwork();
+        // Only re-initialize if the network was already initialized
+        if (networkInitialized) {
+            initNetwork();
+        }
     });
 
     // Initial update after DOM is ready and styles likely applied
     // A small delay can help ensure elements have their final dimensions
     setTimeout(updateRestrictedZones, 100); 
+    
+    // Track if network has been initialized
+    let networkInitialized = false;
+    
     // For images, it's often better to wait for the 'load' event if their size isn't fixed by CSS
     window.addEventListener('load', () => {
         updateRestrictedZones();
-        // Re-initialize network after load to ensure proper distribution
-        initNetwork();
+        // Only initialize if not already done
+        if (!networkInitialized) {
+            initNetwork();
+            networkInitialized = true;
+        }
     });
     
     // Network parameters
@@ -424,7 +434,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Initialize and start animation
-    initNetwork();
+    if (!networkInitialized) {
+        initNetwork();
+        networkInitialized = true;
+    }
     animate();
 });
 

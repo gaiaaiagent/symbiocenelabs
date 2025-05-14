@@ -275,14 +275,14 @@ section {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     border: 1px solid rgba(21, 205, 212, 0.5); /* Teal border */
-    background-color: rgba(107, 234, 196, 0.1); /* Light teal background */
+    background-color: rgba(107, 234, 196, 0.3); /* Increased opacity from 0.1 to 0.3 */
     color: var(--gaia-accent-teal); /* Teal text */
     border-radius: 0.5rem;
     font-weight: 500;
     transition: all 0.3s ease;
     text-decoration: none;
     cursor: pointer;
-    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%); /* Subtle teal gradient */
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.3) 0%, rgba(21, 205, 212, 0.3) 100%); /* Increased opacity from 0.1 to 0.3 */
 }
 
 .button:hover {
@@ -293,8 +293,9 @@ section {
 
 /* Specific button styles */
 .button-greenpaper {
-    background-color: rgba(107, 234, 196, 0.5); /* Increased opacity */
-    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.5) 0%, rgba(21, 205, 212, 0.5) 100%); /* Increased opacity */
+    background-color: rgba(107, 234, 196, 0.7); /* Increased opacity from 0.5 to 0.7 */
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.7) 0%, rgba(21, 205, 212, 0.7) 100%); /* Increased opacity from 0.5 to 0.7 */
+    color: white; /* Make text white */
     /* This class should be used in conjunction with .button, e.g., class="button button-greenpaper" */
 }
 
