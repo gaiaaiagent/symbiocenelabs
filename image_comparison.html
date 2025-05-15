@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparent Image Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .image-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .image-container h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+        .background-toggle {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .background-toggle button {
+            padding: 10px 15px;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .image-wrapper {
+            max-width: 100%;
+            overflow: auto;
+        }
+        /* Background colors to test transparency */
+        .white-bg {
+            background-color: white;
+        }
+        .gray-bg {
+            background-color: #888;
+        }
+        .blue-bg {
+            background-color: #d4f1f9;
+        }
+        .gradient-bg {
+            background-image: linear-gradient(to right, #f5f7fa, #c3cfe2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Transparent Image Comparison</h1>
+    
+    <div class="background-toggle">
+        <p>Change background to test transparency:</p>
+        <button onclick="changeBackground('white-bg')">White</button>
+        <button onclick="changeBackground('gray-bg')">Gray</button>
+        <button onclick="changeBackground('blue-bg')">Light Blue</button>
+        <button onclick="changeBackground('gradient-bg')">Gradient</button>
+    </div>
+    
+    <div class="comparison" id="comparison">
+        <div class="image-container">
+            <h2>Original Image</h2>
+            <div class="image-wrapper">
+                <img src="Cascadia+Rivers+Map+szucs+no+label.jpg" alt="Original Image">
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <h2>Transparent Version 1</h2>
+            <div class="image-wrapper white-bg" id="bg1">
+                <img src="Cascadia_Rivers_Map_transparent.png" alt="Transparent Version 1">
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <h2>Transparent Version 2 (Improved)</h2>
+            <div class="image-wrapper white-bg" id="bg2">
+                <img src="Cascadia_Rivers_Map_transparent_improved.png" alt="Transparent Version 2">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function changeBackground(bgClass) {
+            document.getElementById('bg1').className = 'image-wrapper ' + bgClass;
+            document.getElementById('bg2').className = 'image-wrapper ' + bgClass;
+        }
+    </script>
+</body>
+</html>
