@@ -1,0 +1,29 @@
+# Ignore email subscription data
+subscribed-emails.json
+
+# Ignore logs
+*.log
+
+# Ignore environment variables and config files that might contain sensitive data
+.env
+.env.*
+config.json
+secrets.json
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.sublime-*
