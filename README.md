@@ -14,13 +14,42 @@ The Gaia AI website is a static website that showcases the mission, features, an
 - Email newsletter subscription system
 - Nginx configuration for hosting and API proxying
 
-## Prerequisites
+## Local Development
+
+To test the site locally:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/gaiaaiagent/symbiocenelabs.git
+   cd symbiocenelabs
+   ```
+
+2. Start the local server:
+   ```bash
+   ./serve.sh
+   ```
+   
+   Or alternatively:
+   ```bash
+   python3 -m http.server 8000
+   ```
+
+3. Open your browser and go to:
+   ```
+   http://localhost:8000
+   ```
+
+The site will run locally without requiring the GAIA agent backend - the chat interface will use fallback responses for testing.
+
+## Production Deployment
+
+### Prerequisites
 
 - A server with Ubuntu/Debian (or other Linux distribution)
 - GAIA agent running on the same server (typically on port 3000)
 - Root or sudo access to the server
 
-## Installation
+### Installation
 
 ### Automatic Installation
 
