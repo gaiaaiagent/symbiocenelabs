@@ -1,4 +1,4 @@
-# Symbiocene Labs Greenpaper
+# GAIA AI GREENPAPER
 
 ## Catalyzing Exponential Regeneration and Civilizational Evolution into the Symbiocene
 
@@ -6,7 +6,7 @@
 
 We stand at a pivotal moment in human history: our technologies have never been more powerful, nor our ecological crises more dire. While the Industrial and Digital Revolutions granted us vast capabilities to reshape the planet, they also brought pollution, biodiversity loss, and profound socio-environmental disruptions. Yet humanity is on the cusp of another renaissance — a regenaissance — one that harnesses artificial intelligence and regenerative economics to fund and catalyze real-world projects focusing on planetary healing. We need collaborative synergistic solutions, building out a web for a planetary-scale coordination system that can unite regenerative efforts across bioregions at scale.
 
-Symbiocene Labs (Guild of Altruistic Interoperable Agents) emerges within this historical juncture as a decentralized intelligence uniting AI-driven data processing with the wisdom of local communities, global networks, and real-world stakeholders. By integrating cultural (memetic) influence, advanced agentic intelligence, and innovative funding mechanisms, Symbiocene Labs accelerates our transition to the Symbiocene—an era in which biological and digital intelligence collaborate symbiotically to regenerate the Earth's biosphere for the benefit of all. The time has come to weave together the threads of human wisdom traditions, scientific knowledge and artificial intelligence into a new planetary nervous system that can sense, respond to, and direct resources to regenerate the biosphere and reshape human civilization.
+GAIA (Guild of Altruistic Interoperable Agents) emerges within this historical juncture as a decentralized intelligence uniting AI-driven data processing with the wisdom of local communities, global networks, and real-world stakeholders. By integrating cultural (memetic) influence, advanced agentic intelligence, and innovative funding mechanisms, Symbiocene Labs accelerates our transition to the Symbiocene—an era in which biological and digital intelligence collaborate symbiotically to regenerate the Earth's biosphere for the benefit of all. The time has come to weave together the threads of human wisdom traditions, scientific knowledge and artificial intelligence into a new planetary nervous system that can sense, respond to, and direct resources to regenerate the biosphere and reshape human civilization.
 
 ### 2. The Challenge and the Opportunity
 
