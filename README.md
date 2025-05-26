@@ -19,6 +19,116 @@ The Gaia AI website is a static website that showcases the mission, features, an
 - A server with Ubuntu/Debian (or other Linux distribution)
 - GAIA agent running on the same server (typically on port 3000)
 - Root or sudo access to the server
+- Python 3 (for local development server)
+- Git (for version control)
+
+## Development Workflow
+
+### Local Development and Testing
+
+Before deploying changes to production, always test them locally:
+
+1. **Start Local Development Server:**
+   ```bash
+   # Navigate to the project directory
+   cd /root/GAIA/symbiocenelabs
+   
+   # Start local server using the provided script
+   ./serve.sh
+   
+   # Alternative: Start Python HTTP server directly
+   python3 -m http.server 8001
+   ```
+
+2. **Access Local Development Site:**
+   - Open your browser to: `http://localhost:8001`
+   - Test all functionality including:
+     - Theme toggle (light/dark mode)
+     - Navigation links
+     - Chat interface
+     - Email subscription form
+     - Responsive design on different screen sizes
+
+3. **Making Changes:**
+   - Edit HTML files directly in the project directory
+   - CSS changes go in `css/style.css` or `css/chat.css`
+   - JavaScript changes go in the `js/` directory
+   - Changes are immediately visible after browser refresh
+
+### Git Workflow
+
+This project uses the following branch structure:
+- `main`: Production branch (deployed to live site)
+- `website-new`: Development branch (for testing new features)
+
+**Making Changes:**
+```bash
+# Ensure you're on the development branch
+git checkout website-new
+
+# Make your changes to files
+# Test thoroughly with local development server
+
+# Stage and commit changes
+git add .
+git commit -m "Description of changes made"
+
+# Push to development branch
+git push origin website-new
+```
+
+### Deployment Process
+
+After testing changes locally and committing to the `website-new` branch:
+
+1. **Merge to Main Branch:**
+   ```bash
+   # Switch to main branch
+   git checkout main
+   
+   # Merge changes from development branch
+   git merge website-new
+   
+   # Push to main branch
+   git push origin main
+   ```
+
+2. **Deploy to Production:**
+   ```bash
+   # Run the deployment script
+   sudo ./deploy.sh
+   
+   # Or deploy manually:
+   sudo cp -r ./* /var/www/symbiocenelabs/
+   sudo rm -f /var/www/symbiocenelabs/deploy.sh /var/www/symbiocenelabs/nginx.conf
+   sudo chown -R www-data:www-data /var/www/symbiocenelabs
+   sudo chmod -R 755 /var/www/symbiocenelabs
+   ```
+
+3. **Verify Production Deployment:**
+   - Visit the live site to ensure changes are applied
+   - Test critical functionality
+   - Check browser console for any errors
+
+### Project Structure
+
+- `index.html`: Main landing page
+- `chat.html`: Dedicated chat interface page
+- `greenpaper.html`: Academic paper/documentation page
+- `css/style.css`: Main stylesheet with theme system
+- `css/chat.css`: Chat-specific styles
+- `js/main.js`: Mycelium animation and navigation
+- `js/chat-page.js`: Chat functionality
+- `js/theme-toggle.js`: Dark/light mode toggle
+- `CLAUDE.md`: Development guidelines for AI assistance
+
+### Key Development Notes
+
+- **Theme System**: Uses CSS variables with `[data-theme="dark"]` selectors
+- **Responsive Design**: Mobile-first approach with breakpoints
+- **Animation**: Canvas-based mycelium network (hidden in dark mode)
+- **Performance**: Optimized node density and efficient rendering
+- **Accessibility**: Proper contrast ratios and semantic HTML
 
 ## Installation
 

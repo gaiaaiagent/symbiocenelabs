@@ -6,11 +6,25 @@
 
 /* CSS Variables */
 :root {
-    --gaia-dark-green: #FFFFFF; /* White background */
+    --gaia-dark-green: #e0f7f5; /* Light teal background */
     --gaia-medium-green: #6beac4; /* Light teal */
-    --gaia-light-green: #e0f7f5; /* Very light teal */
+    --gaia-light-green: #f0fdfc; /* Very light teal */
     --gaia-accent-teal: #15cdd4; /* Darker teal */
-    --gaia-text-light: #000000; /* Black text */
+    --gaia-text-light: #0f172a; /* Dark text */
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --gaia-dark-green: #0f172a !important; /* Dark slate background */
+    --gaia-medium-green: #334155 !important; /* Medium slate */
+    --gaia-light-green: #1e293b !important; /* Dark slate for boxes */
+    --gaia-accent-teal: #22d3ee !important; /* Bright cyan */
+    --gaia-text-light: #f1f5f9 !important; /* Light gray text */
+}
+
+/* Force dark mode background */
+[data-theme="dark"] body {
+    background-color: #0f172a !important;
 }
 
 /* Base Styles */
@@ -254,6 +268,35 @@ section {
     100% { opacity: 0.4; }
 }
 
+/* Animated gradient text - reading speed animation */
+@keyframes gradient-wave {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: -100% 50%; /* Shift by one full wave (100% of element width, 50% of gradient width) */
+    }
+}
+
+.gradient-text {
+    background: linear-gradient(to right, 
+        #6beac4 0%, 
+        #15cdd4 15%, /* Start of dark plateau */
+        #15cdd4 35%, /* End of dark plateau */
+        #6beac4 50%, /* End of first wave, back to light */
+        #6beac4 50%, /* Start of second wave (repeat for seamlessness) */
+        #15cdd4 65%, /* Start of dark plateau in second wave */
+        #15cdd4 85%, /* End of dark plateau in second wave */
+        #6beac4 100% /* End of second wave, back to light */
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto; /* Gradient is defined over 2x element width */
+    animation: gradient-wave 6s linear infinite; /* Slower animation at reading speed */
+}
+
 /* Mycelium Network Background */
 .data-grid {
     /* Grid background removed and replaced with canvas in JS */
@@ -289,6 +332,94 @@ section {
     background-color: transparent; /* Remove background color */
     background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%); /* Stronger teal gradient on hover */
     color: var(--gaia-dark-green); /* White text on hover */
+}
+
+/* Pixel-style input */
+.pixel-input {
+    padding: 1rem;
+    border: 1px solid rgba(21, 205, 212, 0.5);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+    border-radius: 0.5rem;
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%);
+    min-width: 700px;
+}
+
+/* Responsive width for mobile */
+@media (max-width: 768px) {
+    .pixel-input {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+.pixel-input:focus {
+    border-color: rgba(21, 205, 212, 0.8);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 2px rgba(21, 205, 212, 0.3);
+}
+
+.pixel-input::placeholder {
+    color: #64748b;
+}
+
+/* Dark mode input styling */
+[data-theme="dark"] .pixel-input {
+    background-color: rgba(30, 41, 59, 0.95);
+    color: #f1f5f9;
+    border-color: rgba(34, 211, 238, 0.6);
+}
+
+[data-theme="dark"] .pixel-input:focus {
+    background-color: rgba(30, 41, 59, 1);
+    border-color: rgba(34, 211, 238, 0.8);
+    box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.3);
+}
+
+[data-theme="dark"] .pixel-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Pixel-style submit button */
+.pixel-button-submit {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(21, 205, 212, 0.5);
+    background-color: rgba(107, 234, 196, 0.3);
+    color: var(--gaia-accent-teal);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.3) 0%, rgba(21, 205, 212, 0.3) 100%);
+}
+
+.pixel-button-submit:hover {
+    background-color: rgba(107, 234, 196, 0.8);
+    background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%);
+    color: var(--gaia-dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(21, 205, 212, 0.3);
+}
+
+/* Dark mode submit button */
+[data-theme="dark"] .pixel-button-submit {
+    border-color: rgba(34, 211, 238, 0.6);
+    background-color: rgba(34, 211, 238, 0.3);
+    color: var(--gaia-accent-teal);
+    background-image: linear-gradient(to right, rgba(34, 211, 238, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%);
+}
+
+[data-theme="dark"] .pixel-button-submit:hover {
+    background-color: rgba(34, 211, 238, 0.8);
+    background-image: linear-gradient(to right, rgba(34, 211, 238, 0.8) 0%, rgba(6, 182, 212, 0.8) 100%);
+    color: var(--gaia-dark-green);
 }
 
 /* Specific button styles */
@@ -358,6 +489,16 @@ footer {
     z-index: -1; /* Behind content */
     opacity: 0.25; /* Semi-transparent */
     pointer-events: none; /* Allow clicks to pass through */
+}
+
+/* Hide watershed background in dark mode */
+[data-theme="dark"] .watershed-background {
+    display: none !important;
+}
+
+/* Hide mycelium canvas in dark mode */
+[data-theme="dark"] #mycelium-background {
+    display: none !important;
 }
 
 .watershed-background img {
@@ -454,4 +595,50 @@ body::before {
      nav .container > .flex.items-center > .flex.items-center { /* The group with logo and title */
         margin-right: auto; /* Pushes nav-links (when visible) or hamburger to the right */
     }
+}
+
+/* Dark Mode Specific Styles */
+[data-theme="dark"] nav {
+    background-color: rgba(15, 23, 42, 0.9);
+    border-bottom: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+[data-theme="dark"] .nav-links {
+    background-color: rgba(15, 23, 42, 0.95);
+}
+
+[data-theme="dark"] .pixel-box {
+    background-color: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(34, 211, 238, 0.5);
+    background-image: linear-gradient(to right, rgba(34, 211, 238, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+}
+
+[data-theme="dark"] footer {
+    color: rgba(241, 245, 249, 0.7);
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--gaia-accent-teal);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }

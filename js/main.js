@@ -155,7 +155,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Network parameters
-    const backgroundColor = '#FFFFFF'; // White background
+    // Dynamic background color based on theme
+    function getBackgroundColor() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        return isDark ? '#0f172a' : '#e0f7f5'; // Dark slate or light teal
+    }
     const lightTeal = '#F0FFFD'; // Extremely Lighter light teal (240, 255, 253)
     const darkTeal = '#B0FFF0'; // Extremely Lighter dark teal (176, 255, 240)
     const nodeColor = 'rgba(107, 234, 196, 0.8)'; // Light teal nodes
@@ -404,20 +408,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Draw the entire network
     function drawNetwork() {
         // Clear canvas
-        ctx.fillStyle = backgroundColor;
+        ctx.fillStyle = getBackgroundColor();
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Sort edges by thickness (largest first)
-        const sortedEdges = [...edges].sort((a, b) => b.thickness - a.thickness);
-        
-        // Draw edges (largest first)
-        sortedEdges.forEach(edge => edge.draw());
-        
-        // Sort nodes by radius (largest first)
-        const sortedNodes = [...nodes].sort((a, b) => b.radius - a.radius);
-        
-        // Draw nodes (largest first)
-        sortedNodes.forEach(node => node.draw());
+        // Only draw mycelium network in light mode
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (!isDark) {
+            // Sort edges by thickness (largest first)
+            const sortedEdges = [...edges].sort((a, b) => b.thickness - a.thickness);
+            
+            // Draw edges (largest first)
+            sortedEdges.forEach(edge => edge.draw());
+            
+            // Sort nodes by radius (largest first)
+            const sortedNodes = [...nodes].sort((a, b) => b.radius - a.radius);
+            
+            // Draw nodes (largest first)
+            sortedNodes.forEach(node => node.draw());
+        }
     }
     
     // Animation loop
@@ -451,4 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
             navLinks.classList.toggle('active');
         });
     }
+    
+    // Expose redraw function globally for theme toggle
+    window.redrawCanvas = drawNetwork;
 });
