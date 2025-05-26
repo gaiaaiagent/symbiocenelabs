@@ -3,11 +3,11 @@
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Gaia AI - Planetary Data Layer for Earth System Monitoring</title>
-        <meta name="description" content="Gaia AI interprets, collates, and indexes disparate data feeds that monitor earth systems, facilitating capital investment in ecosystem regeneration and creating a sustainable future."/>
-        <meta name="author" content="Gaia AI"/>
-        <meta property="og:title" content="Gaia AI - Planetary Data Layer"/>
-        <meta property="og:description" content="Gaia AI interprets, collates, and indexes disparate data feeds that monitor earth systems, facilitating capital investment in ecosystem regeneration and creating a sustainable future."/>
+        <title>Symbiocene Labs - Planetary Data Layer for Earth System Monitoring</title>
+        <meta name="description" content="Symbiocene Labs interprets, collates, and indexes disparate data feeds that monitor earth systems, facilitating capital investment in ecosystem regeneration and creating a sustainable future."/>
+        <meta name="author" content="Symbiocene Labs"/>
+        <meta property="og:title" content="Symbiocene Labs - Planetary Data Layer"/>
+        <meta property="og:description" content="Symbiocene Labs interprets, collates, and indexes disparate data feeds that monitor earth systems, facilitating capital investment in ecosystem regeneration and creating a sustainable future."/>
         <meta property="og:type" content="website"/>
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/15d62c79-b091-490c-9016-6587f93cbaed/id-preview-7203a951--f4794e7a-9c32-4fa6-a52f-6cd08ad04d61.lovable.app-1746590013152.png"/>
         <meta name="twitter:card" content="summary_large_image"/>
@@ -15,380 +15,21 @@
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/15d62c79-b091-490c-9016-6587f93cbaed/id-preview-7203a951--f4794e7a-9c32-4fa6-a52f-6cd08ad04d61.lovable.app-1746590013152.png"/>
         <link rel="stylesheet" href="css/style.css">
         <script src="js/main.js"></script>
-        <style>
-            @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
-            @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-            
-            :root {
-                --background: 0 0% 100%; /* White */
-                --foreground: 0 0% 0%; /* Black */
-                --card: 60 100% 97%; /* Light yellow */
-                --card-foreground: 0 0% 0%; /* Black */
-                --popover: 0 0% 100%; /* White */
-                --popover-foreground: 0 0% 0%; /* Black */
-                --primary: 51 100% 50%; /* Gold */
-                --primary-foreground: 0 0% 100%; /* White */
-                --secondary: 60 80% 90%; /* Light yellow */
-                --secondary-foreground: 0 0% 0%; /* Black */
-                --muted: 60 30% 90%; /* Very light yellow */
-                --muted-foreground: 0 0% 40%; /* Dark gray */
-                --accent: 51 100% 60%; /* Lighter gold */
-                --accent-foreground: 0 0% 0%; /* Black */
-                --destructive: 0 62.8% 30.6%; /* Red */
-                --destructive-foreground: 0 0% 100%; /* White */
-                --border: 51 40% 50%; /* Gold border */
-                --input: 51 40% 50%; /* Gold input */
-                --ring: 51 100% 50%; /* Gold ring */
-                --radius: .5rem;
-                --sidebar-background: 0 0% 100%; /* White */
-                --sidebar-foreground: 0 0% 0%; /* Black */
-                --sidebar-primary: 51 100% 50%; /* Gold */
-                --sidebar-primary-foreground: 0 0% 100%; /* White */
-                --sidebar-accent: 60 30% 90%; /* Light yellow */
-                --sidebar-accent-foreground: 0 0% 0%; /* Black */
-                --sidebar-border: 51 40% 50%; /* Gold border */
-                --sidebar-ring: 51 100% 50%; /* Gold ring */
-            }
-            
-            * {
-                box-sizing: border-box;
-                border-width: 0;
-                border-style: solid;
-                border-color: hsl(var(--border));
-            }
-            
-            body {
-                --tw-bg-opacity: 1;
-                /* background-color: rgb(255 255 255 / var(--tw-bg-opacity)); */ /* White background - Commented out for testing external CSS */
-                font-family: Inter, sans-serif;
-                --tw-text-opacity: 1;
-                color: rgb(0 0 0 / var(--tw-text-opacity)); /* Black text */
-                margin: 0;
-                line-height: inherit;
-            }
-            
-            h1, h2, h3, h4, h5, h6 {
-                font-family: Space Mono, monospace;
-                font-size: inherit;
-                font-weight: inherit;
-            }
-            
-            .container {
-                width: 100%;
-                margin-right: auto;
-                margin-left: auto;
-                padding-right: 2rem;
-                padding-left: 2rem;
-            }
-            
-            @media (min-width: 1400px) {
-                .container {
-                    max-width: 1400px;
-                }
-            }
-            
-            .pixel-box {
-                position: relative;
-                overflow: hidden;
-                border-radius: 0;
-                background-color: rgba(224, 247, 245, 0.8); /* Very light teal background */
-                padding: 1.5rem;
-                border: 1px solid rgba(21, 205, 212, 0.5); /* Teal border */
-                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%); /* Subtle teal gradient */
-                clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
-            }
-            
-            .pixel-dot {
-                margin-left: .125rem;
-                margin-right: .125rem;
-                display: inline-block;
-                height: .375rem;
-                width: .375rem;
-                border-radius: 0;
-                --tw-bg-opacity: 1;
-                background-color: rgb(21 205 212 / var(--tw-bg-opacity)); /* Teal dot */
-                background-image: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
-            }
-            
-            .data-grid {
-                /* Grid background removed and replaced with canvas in JS */
-                background-color: rgb(255 255 255 / var(--tw-bg-opacity)); /* White background */
-            }
-            
-            .animate-pixel-fade {
-                animation: pixel-fade 3s ease-in-out infinite;
-            }
-            
-            @keyframes pixel-fade {
-                0% {
-                    opacity: .4;
-                }
-                50% {
-                    opacity: 1;
-                }
-                to {
-                    opacity: .4;
-                }
-            }
-            
-            .bg-gaia-dark-green {
-                --tw-bg-opacity: 1;
-                background-color: rgb(255 255 255 / var(--tw-bg-opacity)); /* White background */
-            }
-            
-            .bg-gaia-accent-teal {
-                --tw-bg-opacity: 1;
-                background-color: rgb(21 205 212 / var(--tw-bg-opacity)); /* Teal background */
-            }
-            
-            .text-gaia-text-light {
-                --tw-text-opacity: 1;
-                color: rgb(0 0 0 / var(--tw-text-opacity)); /* Black text */
-            }
-            
-            .text-gaia-accent-teal {
-                --tw-text-opacity: 1;
-                color: rgb(21 205 212 / var(--tw-text-opacity)); /* Teal text */
-                background: linear-gradient(to right, 
-                    #6beac4 0%, 
-                    #15cdd4 15%, /* Start of dark plateau */
-                    #15cdd4 35%, /* End of dark plateau */
-                    #6beac4 50%, /* End of first wave, back to light */
-                    #6beac4 50%, /* Start of second wave (repeat for seamlessness) */
-                    #15cdd4 65%, /* Start of dark plateau in second wave */
-                    #15cdd4 85%, /* End of dark plateau in second wave */
-                    #6beac4 100% /* End of second wave, back to light */
-                );
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-    background-size: 200% auto; /* Gradient is defined over 2x element width */
-    animation: gradient-wave 3s linear infinite; /* Speed adjusted to match reading pace */
-            }
-
-            @keyframes gradient-wave {
-                0% {
-                    background-position: 0% 50%;
-                }
-                100% {
-                    background-position: -100% 50%; /* Shift by one full wave (100% of element width, 50% of gradient width) */
-                }
-            }
-            
-            .border-gaia-accent-teal {
-                --tw-border-opacity: 1;
-                border-color: rgb(21 205 212 / var(--tw-border-opacity)); /* Teal border */
-            }
-            
-            .py-16 {
-                padding-top: 4rem;
-                padding-bottom: 4rem;
-            }
-            
-            .py-8 {
-                padding-top: 2rem;
-                padding-bottom: 2rem;
-            }
-            
-            .px-4 {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            
-            .mt-8 {
-                margin-top: 2rem;
-            }
-            
-            .mb-4 {
-                margin-bottom: 1rem;
-            }
-            
-            .mb-8 {
-                margin-bottom: 2rem;
-            }
-            
-            .text-4xl {
-                font-size: 2.25rem;
-                line-height: 2.5rem;
-            }
-            
-            .text-xl {
-                font-size: 1.25rem;
-                line-height: 1.75rem;
-            }
-            
-            .text-lg {
-                font-size: 1.125rem;
-                line-height: 1.75rem;
-            }
-            
-            .font-bold {
-                font-weight: 700;
-            }
-            
-            .flex {
-                display: flex;
-            }
-            
-            .flex-col {
-                flex-direction: column;
-            }
-            
-            .items-center {
-                align-items: center;
-            }
-            
-            .justify-center {
-                justify-content: center;
-            }
-            
-            .justify-between {
-                justify-content: space-between;
-            }
-            
-            .gap-4 {
-                gap: 1rem;
-            }
-            
-            .gap-8 {
-                gap: 2rem;
-            }
-            
-            .grid {
-                display: grid;
-            }
-            
-            .grid-cols-1 {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-            }
-            
-            @media (min-width: 768px) {
-                .md\:grid-cols-2 {
-                    grid-template-columns: repeat(2, minmax(0, 1fr));
-                }
-                
-                .md\:text-5xl {
-                    font-size: 3rem;
-                    line-height: 1;
-                }
-            }
-            
-            @media (min-width: 1024px) {
-                .lg\:grid-cols-3 {
-                    grid-template-columns: repeat(3, minmax(0, 1fr));
-                }
-                
-                .lg\:text-6xl {
-                    font-size: 3.75rem;
-                    line-height: 1;
-                }
-            }
-            
-            .max-w-4xl {
-                max-width: 56rem;
-            }
-            
-            .mx-auto {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .text-center {
-                text-align: center;
-            }
-            
-            .rounded-lg {
-                border-radius: var(--radius);
-            }
-            
-            .border {
-                border-width: 1px;
-            }
-            
-            .border-b {
-                border-bottom-width: 1px;
-            }
-            
-            .border-gaia-accent-teal\/50 {
-                border-color: rgba(21, 205, 212, 0.5); /* Teal border with opacity */
-            }
-            
-            .bg-gaia-accent-teal\/10 {
-                background-color: rgba(21, 205, 212, 0.1); /* Teal background with opacity */
-                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%); /* Subtle teal gradient */
-            }
-            
-            .p-4 {
-                padding: 1rem;
-            }
-            
-            .hover\:bg-gaia-accent-teal\/80:hover {
-                background-color: rgba(21, 205, 212, 0.8); /* Teal background with opacity on hover */
-                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.8) 0%, rgba(21, 205, 212, 0.8) 100%); /* Stronger teal gradient */
-            }
-            
-            .hover\:text-gaia-dark-green:hover {
-                --tw-text-opacity: 1;
-                color: rgb(255 255 255 / var(--tw-text-opacity)); /* White text on hover */
-            }
-            
-            .hover\:text-gaia-accent-teal:hover {
-                background: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-            
-            .transition {
-                transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-                transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-                transition-duration: .15s;
-            }
-            
-            .nav-link {
-                padding: 0.5rem 1rem;
-                transition: color 0.3s ease;
-            }
-            
-            .logo-circle {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                /* border: 2px solid transparent; */ /* Transparent border */
-                /* border-image: linear-gradient(to right, #6beac4, #15cdd4); */ /* Teal gradient border */
-                /* border-image-slice: 1; */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 10px;
-                background-image: linear-gradient(to right, rgba(107, 234, 196, 0.05) 0%, rgba(21, 205, 212, 0.05) 100%); /* Very subtle teal gradient */
-            }
-            
-            .logo-v {
-                background: linear-gradient(to right, #6beac4, #15cdd4); /* Teal gradient */
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                color: transparent;
-                font-size: 24px;
-                font-weight: bold;
-                font-family: 'Space Mono', monospace;
-            }
-        </style>
+        <script src="js/theme-toggle.js"></script>
     </head>
     <body>
         <nav class="py-8 border-b border-gaia-accent-teal/50">
     <div class="container mx-auto flex items-center"> <!-- Removed justify-between -->
         <div class="flex items-center">
             <div class="logo-circle">
-                <img src="gaialogo.png" alt="Gaia AI Logo" class="logo-v">
+                <img src="U9sK4_m8_400x400.jpg" alt="Symbiocene Labs Logo" class="logo-v">
             </div>
-            <span class="text-xl font-bold mr-8">Gaia AI</span> <!-- Added margin-right for spacing -->
+            <span class="text-xl font-bold mr-8">Symbiocene Labs</span> <!-- Added margin-right for spacing -->
             <div class="nav-links">
                 <a href="#mission" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Mission</a>
                 <a href="#features" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Features</a>
                 <a href="#services" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Services</a>
-                <a href="greenpaper.html" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal" target="_blank">Greenpaper</a>
+                <a href="greenpaper.html" class="nav-link text-gaia-text-light hover:text-gaia-accent-teal">Greenpaper</a>
             </div>
             <div class="hamburger-icon md:hidden">
                 <div class="bar"></div>
@@ -412,21 +53,19 @@
                 <div class="flex flex-col gap-1">
                     <h2 class="text-4xl md:text-5xl lg:text-[3.35rem] font-bold text-gaia-text-light">
                         Augmenting Earth's 
-                        <span class="text-gaia-accent-teal">Natural</span>
-                        <span class="text-gaia-accent-teal">Intelligence</span>
+                        <span class="gradient-text">Natural Intelligence</span>
                     </h2>
                     <p class="text-xl text-gaia-text-light mb-4">
-                        Gaia AI is a decentralized intelligence uniting AI-driven data processing with the wisdom of local communities and global networks. We accelerate our transition to a new era where biological and digital intelligence collaborate symbiotically to regenerate Earth's biosphere for the benefit of all.
+                        Symbiocene Labs is a decentralized intelligence uniting AI-driven data processing with the wisdom of local communities and global networks. We accelerate our transition to the Symbiocene—an era where biological and digital intelligence collaborate symbiotically to regenerate Earth's biosphere for the benefit of all.
                     </p>
                     
                     <!-- Chatbot Section -->
                     <div class="pixel-box mt-4 mb-4">
-                        <h3 class="text-xl font-bold text-gaia-accent-teal mb-4 text-center">Talk to Gaia</h3>
-                        <form id="chatbot-form" class="flex flex-col md:flex-row gap-2 items-center max-w-4xl mx-auto">
-                            <input type="text" id="chat-prompt" value="What is the symbiocene?" placeholder="Ask about regenerative practices, bioregionalism, or AI for planetary healing..." 
-                                   class="p-4 border border-gaia-accent-teal/50 rounded-lg w-full focus:ring-2 focus:ring-gaia-accent-teal outline-none" 
-                                   style="background-color: white; color: black; font-size: 1.1rem;" required>
-                            <button type="submit" class="button button-submit-permanent-hover" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                        <h3 class="text-xl font-bold text-gaia-accent-teal mb-4">Talk to Gaia</h3>
+                        <form id="chatbot-form" class="flex flex-col md:flex-row gap-2 items-center">
+                            <input type="text" id="chat-prompt" placeholder="Ask about regenerative practices or planetary healing..." 
+                                   class="pixel-input w-full" required>
+                            <button type="submit" class="pixel-button-submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M12 19V5M5 12l7-7 7 7"/>
                                 </svg>
@@ -441,7 +80,7 @@
                 <section id="mission" class="pixel-box mb-8">
                     <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4">Our Mission</h2>
                     <p class="text-gaia-text-light">
-                        Gaia AI's mission is to catalyze exponential regeneration by integrating ecological, social, and technological systems to inspire collective action toward planetary healing. We achieve this by aggregating global knowledge about regenerative practices, directing resources efficiently toward high-impact projects, and fostering collaboration between AI systems and human communities. Our approach emphasizes both local sovereignty and global coordination, recognizing that effective planetary regeneration requires balancing these complementary forces.
+                        Symbiocene Labs's mission is to catalyze exponential regeneration by integrating ecological, social, and technological systems to inspire collective action toward planetary healing. We achieve this by aggregating global knowledge about regenerative practices, directing resources efficiently toward high-impact projects, and fostering collaboration between AI systems and human communities. Our approach emphasizes both local sovereignty and global coordination, recognizing that effective planetary regeneration requires balancing these complementary forces.
                     </p>
                 </section>
                 
@@ -475,7 +114,7 @@
                     <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4 text-center">Our Services</h2>
                     <div class="pixel-box">
                         <p class="text-gaia-text-light mb-4">
-                            Gaia AI designs and builds custom software solutions with a specialization in artificial intelligence. Our expertise includes:
+                            Symbiocene Labs designs and builds custom software solutions with a specialization in artificial intelligence. Our expertise includes:
                         </p>
                         <ul class="list-disc list-inside text-gaia-text-light mb-4 ml-4">
                             <li>AI Agent Development: Crafting intelligent agents tailored to your specific needs.</li>
@@ -489,10 +128,10 @@
                 </section>
                 
                 <section id="ecosystem" class="mb-8">
-                    <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4 text-center">The Gaia AI Vision</h2>
+                    <h2 class="text-2xl font-bold text-gaia-accent-teal mb-4 text-center">The Symbiocene Vision</h2>
                     <div class="pixel-box">
                         <p class="text-gaia-text-light">
-                            To usher in a new era of planetary stewardship and civilizational evolution where biological and digital intelligence collaborate to regenerate the Earth's biosphere for the benefit of all life. This vision represents a fundamental shift from the extractive paradigms of the past toward a future of abundance through regeneration. We see technology not as a force for control or exploitation, but as a tool for enhancing life's natural tendency toward diversity and resilience. By uniting AI's capacity for intelligence with the human capacity for wisdom, we are accelerating the emergence of a symbiotic civilization that amplifies nature's inherent regenerative potential.
+                            To usher in a new era of planetary stewardship and civilizational evolution—The Symbiocene—where biological and digital intelligence collaborate to regenerate the Earth's biosphere for the benefit of all life. This vision represents a fundamental shift from the extractive paradigms of the past toward a future of abundance through regeneration. We see technology not as a force for control or exploitation, but as a tool for enhancing life's natural tendency toward diversity and resilience. By uniting AI's capacity for intelligence with the human capacity for wisdom, we are accelerating the emergence of a symbiotic civilization that amplifies nature's inherent regenerative potential.
                         </p>
                     </div>
                 </section>
@@ -503,11 +142,10 @@
                         <p class="text-gaia-text-light mb-4 text-center">
                             Sign up to receive updates on our projects, research, and opportunities to get involved.
                         </p>
-                        <form id="email-signup-form" class="flex flex-col md:flex-row gap-4 items-center" novalidate>
-                            <input type="email" id="signup-email" placeholder="Enter your email" class="p-4 border border-gaia-accent-teal/50 rounded-lg w-full focus:ring-2 focus:ring-gaia-accent-teal outline-none" style="background-color: white; color: black;" required>
+                        <form class="flex flex-col md:flex-row gap-4 items-center">
+                            <input type="email" placeholder="Enter your email" class="pixel-input w-full" required>
                             <button type="submit" class="button button-submit-permanent-hover w-full md:w-auto">Submit</button>
                         </form>
-                        <div id="signup-message" class="mt-4 text-center hidden"></div>
                     </div>
                 </section>
                 
@@ -526,13 +164,12 @@
             
             <footer class="py-8 text-center">
                 <p class="text-gaia-text-light/70">
-                    &copy; 2025 Gaia AI - Catalyzing Exponential Regeneration
+                    &copy; 2025 Symbiocene Labs - Catalyzing Exponential Regeneration
                 </p>
             </footer>
         </div>
-    <script src="js/api-client.js"></script>
     <script>
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             // Handle chatbot form submission
             const chatbotForm = document.getElementById('chatbot-form');
             const chatPromptInput = document.getElementById('chat-prompt');
@@ -551,65 +188,6 @@
                         chatPromptInput.value = '';
                     }
                 });
-            }
-            
-            // Handle email signup form submission
-            const emailSignupForm = document.getElementById('email-signup-form');
-            const signupEmailInput = document.getElementById('signup-email');
-            const signupMessage = document.getElementById('signup-message');
-            
-            if (emailSignupForm && signupEmailInput && signupMessage) {
-                emailSignupForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    const email = signupEmailInput.value.trim();
-                    if (!email) {
-                        showSignupMessage('Please enter a valid email address.', 'error');
-                        return;
-                    }
-                    
-                    try {
-                        // Show loading message
-                        showSignupMessage('Subscribing...', 'info');
-                        
-                        // Call the API to subscribe the email
-                        const result = await gaiaApi.subscribeEmail(email);
-                        
-                        // Show success message
-                        showSignupMessage('Thank you for subscribing! We\'ll keep you updated.', 'success');
-                        
-                        // Clear the input field
-                        signupEmailInput.value = '';
-                    } catch (error) {
-                        console.error('Error subscribing email:', error);
-                        showSignupMessage('There was an error subscribing. Please try again later.', 'error');
-                    }
-                });
-            }
-            
-            // Helper function to show signup messages
-            function showSignupMessage(message, type) {
-                signupMessage.textContent = message;
-                signupMessage.className = 'mt-4 text-center'; // Reset classes
-                
-                // Add appropriate styling based on message type
-                if (type === 'error') {
-                    signupMessage.classList.add('text-red-500');
-                } else if (type === 'success') {
-                    signupMessage.classList.add('text-green-500');
-                } else {
-                    signupMessage.classList.add('text-gaia-accent-teal');
-                }
-                
-                // Show the message
-                signupMessage.classList.remove('hidden');
-                
-                // Hide the message after 5 seconds if it's a success message
-                if (type === 'success') {
-                    setTimeout(() => {
-                        signupMessage.classList.add('hidden');
-                    }, 5000);
-                }
             }
         });
     </script>
