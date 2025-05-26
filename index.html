@@ -142,10 +142,13 @@
                         <p class="text-gaia-text-light mb-4 text-center">
                             Sign up to receive updates on our projects, research, and opportunities to get involved.
                         </p>
-                        <form class="flex flex-col md:flex-row gap-4 items-center">
-                            <input type="email" placeholder="Enter your email" class="pixel-input w-full" required>
+                        <form id="email-signup-form" class="flex flex-col md:flex-row gap-4 items-center">
+                            <input type="email" id="email-input" placeholder="Enter your email" class="pixel-input w-full" required>
                             <button type="submit" class="button button-submit-permanent-hover w-full md:w-auto">Submit</button>
                         </form>
+                        <div id="confirmation-message" class="mt-4 text-center text-gaia-accent-teal font-bold" style="display: none;">
+                            Thank you for subscribing! We'll keep you updated on our regenerative projects.
+                        </div>
                     </div>
                 </section>
                 
@@ -186,6 +189,35 @@
                         
                         // Clear the input field
                         chatPromptInput.value = '';
+                    }
+                });
+            }
+
+            // Handle email signup form submission
+            const emailSignupForm = document.getElementById('email-signup-form');
+            const emailInput = document.getElementById('email-input');
+            const confirmationMessage = document.getElementById('confirmation-message');
+            
+            if (emailSignupForm && emailInput && confirmationMessage) {
+                emailSignupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = emailInput.value.trim();
+                    if (email) {
+                        // Here you would typically send the email to your backend
+                        // For now, we'll just show the confirmation message
+                        console.log('Email signup:', email);
+                        
+                        // Clear the input field
+                        emailInput.value = '';
+                        
+                        // Show confirmation message
+                        confirmationMessage.style.display = 'block';
+                        
+                        // Hide confirmation message after 5 seconds
+                        setTimeout(function() {
+                            confirmationMessage.style.display = 'none';
+                        }, 5000);
                     }
                 });
             }
