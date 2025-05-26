@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Talk to Gaia - Symbiocene Labs</title>
+    <title>Talk to Gaia - Gaia AI</title>
     <meta name="description" content="Chat with Gaia about regenerative practices and planetary healing."/>
-    <meta name="author" content="Symbiocene Labs"/>
+    <meta name="author" content="Gaia AI"/>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <script src="js/api-client.js"></script>
+    <script src="js/chat-page.js"></script>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
         @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
@@ -16,9 +19,13 @@
         }
         
         .chat-container {
-            max-width: 900px;
+            width: 100%;
+            max-width: 100%;
             margin: 0 auto;
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 150px); /* Subtract header and footer height */
         }
         
         .chat-header {
@@ -27,6 +34,12 @@
         
         .chat-messages {
             margin-bottom: 2rem;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
         
         .message {
@@ -34,7 +47,10 @@
             padding: 1.5rem;
             border-radius: 0;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            word-wrap: break-word;
+            width: auto;
+            max-width: 60%; /* Reduced from 80% to allow more space between messages */
         }
         
         .user-message {
@@ -42,18 +58,28 @@
             border: 1px solid rgba(21, 205, 212, 0.5);
             background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%);
             clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+            align-self: flex-end;
         }
         
         .ai-message {
             background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(21, 205, 212, 0.3);
             clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+            align-self: flex-start;
         }
         
         .message-label {
             font-family: 'Space Mono', monospace;
             font-weight: bold;
             margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .message-content {
+            display: block;
+            width: 100%;
+            overflow: visible;
+            word-wrap: break-word;
         }
         
         .user-label {
@@ -79,6 +105,9 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         @media (min-width: 768px) {
@@ -96,6 +125,7 @@
             font-size: 1rem;
             background-color: white;
             color: black;
+            min-height: 50px;
         }
         
         .chat-input-field:focus {
@@ -160,14 +190,14 @@
     </style>
 </head>
 <body>
-    <div class="container mx-auto">
+    <div class="container mx-auto" style="max-width: 100%; padding: 0;">
         <nav class="py-8 border-b border-gaia-accent-teal/50">
             <div class="flex items-center">
                 <a href="index.html" class="flex items-center">
                     <div class="logo-circle">
-                        <img src="U9sK4_m8_400x400.jpg" alt="Symbiocene Labs Logo" class="logo-v">
+                        <img src="gaialogo.png" alt="Gaia AI Logo" class="logo-v">
                     </div>
-                    <span class="text-xl font-bold">Symbiocene Labs</span>
+                    <span class="text-xl font-bold">Gaia AI</span>
                 </a>
             </div>
         </nav>
@@ -201,7 +231,8 @@
                     <input type="text" id="chat-input-field" class="chat-input-field" placeholder="Continue the conversation..." required>
                     <button type="submit" class="button button-submit-permanent-hover" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
                     </button>
                 </form>
@@ -210,132 +241,11 @@
         
         <footer class="py-8 text-center">
             <p class="text-gaia-text-light/70">
-                &copy; 2025 Symbiocene Labs - Catalyzing Exponential Regeneration
+                &copy; 2025 Gaia AI - Catalyzing Exponential Regeneration
             </p>
         </footer>
     </div>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const initialPrompt = urlParams.get('prompt');
-            const chatMessages = document.getElementById('chat-messages');
-            const chatForm = document.getElementById('chat-form');
-            const chatInputField = document.getElementById('chat-input-field');
-            const loadingIndicator = document.getElementById('loading-indicator');
-            
-            // Conversation history
-            let conversationHistory = [];
-            
-            // Add the initial prompt if it exists
-            if (initialPrompt) {
-                addUserMessage(initialPrompt);
-                conversationHistory.push({ role: 'user', content: initialPrompt });
-                generateResponse(initialPrompt);
-            }
-            
-            // Handle form submission
-            chatForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const userMessage = chatInputField.value.trim();
-                if (userMessage) {
-                    addUserMessage(userMessage);
-                    conversationHistory.push({ role: 'user', content: userMessage });
-                    chatInputField.value = '';
-                    generateResponse(userMessage);
-                }
-            });
-            
-            // Add a user message to the chat
-            function addUserMessage(message) {
-                const messageElement = document.createElement('div');
-                messageElement.className = 'message user-message';
-                messageElement.innerHTML = `
-                    <div class="message-label user-label">You</div>
-                    <div class="message-content">${message}</div>
-                `;
-                chatMessages.appendChild(messageElement);
-                scrollToBottom();
-            }
-            
-            // Add an AI message to the chat
-            function addAIMessage(message) {
-                const messageElement = document.createElement('div');
-                messageElement.className = 'message ai-message';
-                messageElement.innerHTML = `
-                    <div class="message-label ai-label">Gaia</div>
-                    <div class="message-content">${formatMessage(message)}</div>
-                `;
-                chatMessages.appendChild(messageElement);
-                scrollToBottom();
-            }
-            
-            // Format message with markdown-like syntax
-            function formatMessage(message) {
-                // Replace **text** with <strong>text</strong>
-                message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                
-                // Replace *text* with <em>text</em>
-                message = message.replace(/\*(.*?)\*/g, '<em>$1</em>');
-                
-                // Replace newlines with <br>
-                message = message.replace(/\n/g, '<br>');
-                
-                return message;
-            }
-            
-            // Scroll to the bottom of the chat
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            
-            // Generate a response based on the user's message
-            function generateResponse(userMessage) {
-                // Show loading indicator
-                loadingIndicator.style.display = 'block';
-                
-                // Simulate AI response delay (1-3 seconds)
-                const responseDelay = 1000 + Math.random() * 2000;
-                
-                setTimeout(() => {
-                    // Hide loading indicator
-                    loadingIndicator.style.display = 'none';
-                    
-                    // Generate a response based on the user's message
-                    let response;
-                    
-                    // Simple keyword-based responses
-                    if (userMessage.toLowerCase().includes('regenerative') || 
-                        userMessage.toLowerCase().includes('regeneration')) {
-                        response = "Regenerative practices go beyond sustainability by actively restoring and enhancing ecosystems. At Symbiocene Labs, we focus on **exponential regeneration** – creating systems that accelerate nature's inherent healing capacity.\n\nThis includes regenerative agriculture that builds soil health, watershed restoration that enhances water cycles, and economic models that create value while healing ecosystems. Would you like to learn more about specific regenerative approaches?";
-                    } 
-                    else if (userMessage.toLowerCase().includes('bioregion') || 
-                             userMessage.toLowerCase().includes('local')) {
-                        response = "Bioregionalism is a key principle in our work. We believe AI systems should be grounded in specific places and their unique ecological and cultural contexts.\n\nOur bioregional approach includes:\n\n- Local knowledge commons stewarded by communities\n- Data sovereignty while participating in global networks\n- Place-based digital twins modeling ecological relationships\n- Participatory ground-truthing that combines satellite, sensor, and community data\n\nThis enables bidirectional flows of resources and knowledge between local and global systems.";
-                    }
-                    else if (userMessage.toLowerCase().includes('ai') || 
-                             userMessage.toLowerCase().includes('artificial intelligence')) {
-                        response = "At Symbiocene Labs, we view AI not as separate technology, but as a means of **Augmenting Earth's Natural Intelligence**. We're creating Gaia's Neural Backbone – a distributed, edge-driven intelligence system characterized by:\n\n- Neural + symbolic AI synergy\n- Commons-woven data fabric\n- Interoperability by design\n- Multi-directional value & insight streams\n\nOur AI approach focuses on knowledge commoning and neuralsymbolic enhancement, combining traditional wisdom with cutting-edge technology to serve regenerative outcomes.";
-                    }
-                    else if (userMessage.toLowerCase().includes('symbiocene')) {
-                        response = "The Symbiocene represents a new era of planetary stewardship and civilizational evolution where biological and digital intelligence collaborate to regenerate Earth's biosphere for the benefit of all life.\n\nThis vision represents a fundamental shift from extractive paradigms toward a future of abundance through regeneration. We see technology not as a force for control, but as a tool for enhancing life's natural tendency toward diversity and resilience.\n\nBy uniting AI's capacity for intelligence with human wisdom, we're accelerating the emergence of a symbiotic civilization that amplifies nature's regenerative potential.";
-                    }
-                    else if (userMessage.toLowerCase().includes('mycelial') || 
-                             userMessage.toLowerCase().includes('mycelium')) {
-                        response = "Our Mycelial Intelligence Network leverages web3 capabilities to create decentralized, interoperable networks of knowledge and action.\n\nSimilar to how mycelial networks in nature distribute nutrients and information across ecosystems, Symbiocene Labs facilitates the flow of knowledge, resources, and coordination across bioregions.\n\nEach agent functions as a node within this network, processing information, connecting with others, and participating in collective intelligence processes. This enables fractal scaling of intelligence – from individual agents to local knowledge commons to bioregional networks to global coordination.";
-                    }
-                    else {
-                        response = "Thank you for your question about \"" + userMessage + "\".\n\nAt Symbiocene Labs, we're focused on catalyzing exponential regeneration by integrating ecological, social, and technological systems to inspire collective action toward planetary healing.\n\nOur approach emphasizes both local sovereignty and global coordination through bioregional intelligence, knowledge commons, and mycelial networks.\n\nCould you share more specifically what aspects of regenerative practices, bioregionalism, or AI for planetary healing you're interested in learning about?";
-                    }
-                    
-                    // Add the response to the chat
-                    addAIMessage(response);
-                    conversationHistory.push({ role: 'assistant', content: response });
-                    
-                }, responseDelay);
-            }
-        });
-    </script>
+    <!-- Chat functionality is now handled by chat-page.js -->
 </body>
 </html>

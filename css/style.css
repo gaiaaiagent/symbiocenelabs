@@ -1,4 +1,4 @@
-/* Symbiocene Labs Website Styles */
+/* Gaia AI Website Styles */
 
 /* Import Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
@@ -133,7 +133,7 @@ a:hover {
 /* Layout */
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%; /* Changed from 1200px to 100% for full width */
     margin: 0 auto;
     padding: 0 2rem;
 }
