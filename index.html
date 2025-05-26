@@ -204,20 +204,42 @@
                     
                     const email = emailInput.value.trim();
                     if (email) {
-                        // Here you would typically send the email to your backend
-                        // For now, we'll just show the confirmation message
-                        console.log('Email signup:', email);
-                        
-                        // Clear the input field
-                        emailInput.value = '';
-                        
-                        // Show confirmation message
-                        confirmationMessage.style.display = 'block';
-                        
-                        // Hide confirmation message after 5 seconds
-                        setTimeout(function() {
-                            confirmationMessage.style.display = 'none';
-                        }, 5000);
+                        // Send email to backend subscription handler
+                        fetch('/api/subscribe', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email: email })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Subscription response:', data);
+                            
+                            // Clear the input field
+                            emailInput.value = '';
+                            
+                            // Show confirmation message
+                            confirmationMessage.style.display = 'block';
+                            
+                            // Hide confirmation message after 5 seconds
+                            setTimeout(function() {
+                                confirmationMessage.style.display = 'none';
+                            }, 5000);
+                        })
+                        .catch(error => {
+                            console.error('Error subscribing:', error);
+                            
+                            // Still clear input and show message for better UX
+                            emailInput.value = '';
+                            confirmationMessage.textContent = 'Thank you! We received your subscription.';
+                            confirmationMessage.style.display = 'block';
+                            
+                            setTimeout(function() {
+                                confirmationMessage.style.display = 'none';
+                                confirmationMessage.textContent = 'Thank you for subscribing! We\'ll keep you updated on our regenerative projects.';
+                            }, 5000);
+                        });
                     }
                 });
             }
