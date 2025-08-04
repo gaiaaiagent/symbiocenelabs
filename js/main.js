@@ -181,12 +181,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Small nodes (0.4-1.2px) - increased minimum size to eliminate very tiny nodes
                 this.radius = 0.4 + Math.random() * 0.8;
                 // Lower opacity for small nodes to reduce visual weight
-                this.opacity = 0.15 + Math.random() * 0.2; 
+                this.opacity = 0.06 + Math.random() * 0.08; 
             } else {
                 // Regular nodes with less variation (0.8-4px) - increased minimum size
                 this.radius = 0.8 + Math.random() * 3.2;
                 // Adjusted opacity for regular nodes
-                this.opacity = 0.3 + (this.radius / 4) * 0.5; 
+                this.opacity = 0.1 + (this.radius / 4) * 0.15; 
             }
             
             this.connections = [];
@@ -224,17 +224,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Slightly thicker edges between small nodes (0.2-0.4px) - increased minimum thickness
                 this.thickness = 0.2 + Math.random() * 0.2;
                 // Increased opacity for small-to-small connections for better visibility
-                this.opacity = 0.15 + Math.random() * 0.15; 
+                this.opacity = 0.06 + Math.random() * 0.06; 
             } else if (oneSmall) {
                 // Thin edges for connections to small nodes (0.2-0.7px) - increased minimum thickness
                 this.thickness = 0.2 + Math.random() * 0.5;
                 // Increased opacity for small connections
-                this.opacity = 0.2 + Math.random() * 0.25; 
+                this.opacity = 0.08 + Math.random() * 0.08; 
             } else {
                 // Regular edges with less variation (0.3-2px) - increased minimum thickness
                 this.thickness = 0.3 + Math.random() * 1.7;
                 // Adjusted opacity for regular edges
-                this.opacity = 0.3 + (this.thickness / 2) * 0.4; 
+                this.opacity = 0.1 + (this.thickness / 2) * 0.12; 
             }
             
             // Calculate length for gradient animation
