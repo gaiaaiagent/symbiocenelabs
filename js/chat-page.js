@@ -144,7 +144,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Scroll to the bottom of the chat
     function scrollToBottom() {
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Use requestAnimationFrame for smoother scrolling
+        requestAnimationFrame(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
     }
     
     // Generate a fallback response based on the user's message (used if API fails)

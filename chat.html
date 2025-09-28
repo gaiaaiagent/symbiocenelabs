@@ -1,252 +1,693 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Talk to Gaia - Gaia AI</title>
     <meta name="description" content="Chat with Gaia about regenerative practices and planetary healing."/>
-    <meta name="author" content="Gaia AI"/>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/chat.css">
+    <link rel="icon" type="image/png" href="gaialogo.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Include the API client -->
     <script src="js/api-client.js"></script>
-    <script src="js/chat-page.js"></script>
-    <script src="js/theme-toggle.js"></script>
+
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-        
-        body::before {
-            display: none !important; /* Hide watershed background on this page */
+        /* CSS Variables matching main site */
+        :root {
+            --gaia-dark-green: #e0f7f5;
+            --gaia-medium-green: #6beac4;
+            --gaia-light-green: #f0fdfc;
+            --gaia-accent-teal: #15cdd4;
+            --gaia-text-light: #0f172a;
         }
-        
-        .chat-container {
+
+        /* Dark Mode (Default) */
+        [data-theme="dark"] {
+            --gaia-dark-green: #0f172a;
+            --gaia-medium-green: #334155;
+            --gaia-light-green: #1e293b;
+            --gaia-accent-teal: #22d3ee;
+            --gaia-text-light: #f1f5f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
             width: 100%;
-            max-width: 100%;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--gaia-dark-green);
+            color: var(--gaia-text-light);
+            line-height: 1.6;
+        }
+
+        .app {
+            height: 100vh;
+            height: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--gaia-dark-green);
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 1rem;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .header-content {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
             display: flex;
-            flex-direction: column;
-            height: calc(100vh - 150px); /* Subtract header and footer height */
+            align-items: center;
+            justify-content: space-between;
         }
-        
-        .chat-header {
-            margin-bottom: 2rem;
-        }
-        
-        .chat-messages {
-            margin-bottom: 2rem;
-            flex: 1;
-            overflow-y: auto;
-            min-height: 300px;
+
+        .logo-section {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gaia-text-light);
         }
-        
-        .message {
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            border-radius: 0;
-            position: relative;
-            overflow: visible;
-            word-wrap: break-word;
-            width: auto;
-            max-width: 60%; /* Reduced from 80% to allow more space between messages */
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(107, 234, 196, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
         }
-        
-        .user-message {
-            background-color: rgba(224, 247, 245, 0.8);
-            border: 1px solid rgba(21, 205, 212, 0.5);
-            background-image: linear-gradient(to right, rgba(107, 234, 196, 0.1) 0%, rgba(21, 205, 212, 0.1) 100%);
-            clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
-            align-self: flex-end;
+
+        .logo-circle img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: contain;
         }
-        
-        .ai-message {
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(21, 205, 212, 0.3);
-            clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
-            align-self: flex-start;
-        }
-        
-        .message-label {
+
+        .site-title {
             font-family: 'Space Mono', monospace;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        
-        .message-content {
-            display: block;
-            width: 100%;
-            overflow: visible;
-            word-wrap: break-word;
-        }
-        
-        .user-label {
-            color: #15cdd4;
-        }
-        
-        .ai-label {
+            font-size: 1.25rem;
+            font-weight: 700;
             background: linear-gradient(to right, #6beac4, #15cdd4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .message-content {
-            line-height: 1.6;
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
-        
-        .chat-input {
+
+        .back-link {
+            color: var(--gaia-accent-teal);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* Theme Toggle Button in header */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gaia-light-green);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            color: var(--gaia-accent-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(34, 211, 238, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Chat Content Wrapper */
+        .chat-content {
+            flex: 1;
+            overflow-y: auto;
+            background: var(--gaia-dark-green);
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            min-height: 0;
+        }
+
+        /* Chat Header - now scrolls with content */
+        .chat-header {
+            padding: 1.5rem;
+            background: var(--gaia-light-green);
+            border-bottom: 1px solid rgba(34, 211, 238, 0.1);
+        }
+
+        .chat-header h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            background: linear-gradient(to right, #6beac4, #15cdd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-header p {
+            font-size: 0.9rem;
+            color: var(--gaia-text-light);
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* Messages Container */
+        .messages-container {
+            padding: 1.5rem;
+            background: var(--gaia-dark-green);
+        }
+
+        /* Messages */
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-bubble {
+            max-width: 85%;
+            padding: 0.875rem 1.125rem;
+            border-radius: 18px;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+            line-height: 1.6;
             position: relative;
         }
-        
-        .chat-form {
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, rgba(107, 234, 196, 0.2), rgba(21, 205, 212, 0.2));
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            color: var(--gaia-text-light);
+            border-radius: 18px 18px 4px 18px;
+        }
+
+        .message.ai .message-bubble {
+            background: var(--gaia-light-green);
+            color: var(--gaia-text-light);
+            border: 1px solid rgba(34, 211, 238, 0.1);
+            border-radius: 18px 18px 18px 4px;
+        }
+
+        .message.system {
+            justify-content: center;
+        }
+
+        .message.system .message-bubble {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--gaia-accent-teal);
+            font-size: 0.85rem;
+            max-width: 70%;
+            text-align: center;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .loading.active {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gaia-accent-teal);
+            border-radius: 50%;
+            animation: pulse 1.4s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse {
+            0%, 80%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 1rem 1.5rem;
+            background: var(--gaia-light-green);
+            border-top: 1px solid rgba(34, 211, 238, 0.1);
+            flex-shrink: 0;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 0.75rem;
             max-width: 1200px;
             margin: 0 auto;
         }
-        
-        @media (min-width: 768px) {
-            .chat-form {
-                flex-direction: row;
-            }
-        }
-        
-        .chat-input-field {
+
+        .input-field {
             flex: 1;
-            padding: 1rem;
-            border: 1px solid rgba(21, 205, 212, 0.5);
-            border-radius: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--gaia-dark-green);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 24px;
+            color: var(--gaia-text-light);
+            font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            background-color: white;
-            color: black;
-            min-height: 50px;
-        }
-        
-        .chat-input-field:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(21, 205, 212, 0.3);
+            transition: all 0.3s ease;
         }
-        
-        .loading-indicator {
-            display: none;
-            margin: 2rem 0;
-            text-align: center;
+
+        .input-field::placeholder {
+            color: var(--gaia-text-light);
+            opacity: 0.5;
         }
-        
-        .loading-dots {
-            display: inline-flex;
-            gap: 0.5rem;
+
+        .input-field:focus {
+            border-color: var(--gaia-accent-teal);
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
         }
-        
-        .loading-dot {
-            width: 10px;
-            height: 10px;
+
+        .send-button {
+            width: 44px;
+            height: 44px;
+            border: none;
             border-radius: 50%;
-            background: linear-gradient(to right, #6beac4, #15cdd4);
-            animation: pulse 1.5s infinite ease-in-out;
+            background: linear-gradient(135deg, #6beac4, #15cdd4);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
-        
-        .loading-dot:nth-child(2) {
-            animation-delay: 0.3s;
+
+        .send-button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
         }
-        
-        .loading-dot:nth-child(3) {
-            animation-delay: 0.6s;
+
+        .send-button:active:not(:disabled) {
+            transform: scale(0.95);
         }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 0.4;
-                transform: scale(0.8);
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem;
             }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
+
+            .site-title {
+                font-size: 1.1rem;
+            }
+
+            .back-link {
+                display: none;
+            }
+
+            .chat-header {
+                padding: 1rem;
+            }
+
+            .chat-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .chat-header p {
+                font-size: 0.85rem;
+            }
+
+            .messages-container {
+                padding: 1rem;
+            }
+
+            .message-bubble {
+                max-width: 90%;
+                font-size: 0.925rem;
+            }
+
+            .input-area {
+                padding: 0.75rem;
+            }
+
+            .input-field {
+                font-size: 16px; /* Prevents zoom on iOS */
             }
         }
-        
-        .back-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            color: #15cdd4;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
+
+        /* Light mode specific adjustments */
+        [data-theme="light"] {
+            background-color: #f0fdfc;
         }
-        
-        .back-link:hover {
-            color: #6beac4;
+
+        [data-theme="light"] .header {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(21, 205, 212, 0.2);
         }
-        
-        .back-icon {
-            margin-right: 0.5rem;
+
+        [data-theme="light"] .message.user .message-bubble {
+            background: linear-gradient(135deg, #15cdd4, #6beac4);
+            color: white;
+            border: none;
+        }
+
+        [data-theme="light"] .message.ai .message-bubble {
+            background: white;
+            border: 1px solid rgba(21, 205, 212, 0.2);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container mx-auto" style="max-width: 100%; padding: 0;">
-        <nav class="py-8 border-b border-gaia-accent-teal/50">
-            <div class="flex items-center">
-                <a href="index.html" class="flex items-center">
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="index.html" class="logo-section">
                     <div class="logo-circle">
-                        <img src="gaialogo.png" alt="Gaia AI Logo" class="logo-v">
+                        <img src="gaialogo.png" alt="Gaia AI" />
                     </div>
-                    <span class="text-xl font-bold">Gaia AI</span>
+                    <span class="site-title">Gaia AI</span>
                 </a>
+                <div class="header-actions">
+                    <a href="index.html" class="back-link">← Back to Home</a>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <span id="theme-icon">☀️</span>
+                    </button>
+                </div>
             </div>
-        </nav>
-        
-        <div class="chat-container">
-            <a href="index.html" class="back-link">
-                <span class="back-icon">←</span> Back to Home
-            </a>
-            
+        </header>
+
+        <!-- Chat Content (scrollable wrapper) -->
+        <div class="chat-content" id="chat-content">
+            <!-- Chat Header (scrolls with content) -->
             <div class="chat-header">
-                <h1 class="text-2xl font-bold text-gaia-accent-teal">Talk to Gaia</h1>
-                <p class="text-gaia-text-light">
-                    Ask questions about regenerative practices, bioregionalism, or how we can collaborate to heal Earth's biosphere.
-                </p>
+                <h1>Talk to Gaia</h1>
+                <p>Ask questions about regenerative practices, bioregionalism, or how we can collaborate to heal Earth's biosphere.</p>
             </div>
-            
-            <div class="chat-messages" id="chat-messages">
-                <!-- Messages will be added here dynamically -->
+
+            <!-- Messages -->
+            <div class="messages-container" id="messages">
+                <!-- Messages will be added dynamically -->
             </div>
-            
-            <div class="loading-indicator" id="loading-indicator">
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
                 <div class="loading-dots">
                     <div class="loading-dot"></div>
                     <div class="loading-dot"></div>
                     <div class="loading-dot"></div>
                 </div>
             </div>
-            
-            <div class="chat-input">
-                <form id="chat-form" class="chat-form">
-                    <input type="text" id="chat-input-field" class="chat-input-field" placeholder="Continue the conversation..." required>
-                    <button type="submit" class="button button-submit-permanent-hover" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                    </button>
-                </form>
-            </div>
         </div>
-        
-        <footer class="py-8 text-center">
-            <p class="text-gaia-text-light/70">
-                &copy; 2025 Gaia AI - Catalyzing Exponential Regeneration
-            </p>
-        </footer>
+        <!-- End of chat-content -->
+
+        <!-- Input -->
+        <div class="input-area">
+            <form class="input-form" id="chat-form">
+                <input
+                    type="text"
+                    id="input"
+                    class="input-field"
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                    autofocus
+                />
+                <button type="submit" class="send-button" id="send-button" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
-    
-    <!-- Chat functionality is now handled by chat-page.js -->
+
+    <script>
+        // Use the API client from api-client.js (already loaded)
+        // gaiaApi is already defined in api-client.js
+        let selectedAgentId = null;
+        let conversationHistory = [];
+
+        // Theme management
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Chat functionality
+        const chatContent = document.getElementById('chat-content');
+        const messages = document.getElementById('messages');
+        const form = document.getElementById('chat-form');
+        const input = document.getElementById('input');
+        const loading = document.getElementById('loading');
+        const sendButton = document.getElementById('send-button');
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialPrompt = urlParams.get('prompt');
+
+        // Initialize chat
+        async function initializeChat() {
+            try {
+                // Fetch available agents
+                const response = await gaiaApi.getAgents();
+                const agents = response.agents || [];
+
+                if (agents.length > 0) {
+                    // Use the first agent (Gaia)
+                    selectedAgentId = agents[0].id;
+                    console.log(`Connected to agent: ${agents[0].name}`);
+
+                    // Add welcome message
+                    addMessage("Welcome to Gaia AI. I'm here to help you explore regenerative practices and planetary healing. How can I assist you today?", 'ai');
+                    conversationHistory.push({
+                        role: 'assistant',
+                        content: "Welcome to Gaia AI. I'm here to help you explore regenerative practices and planetary healing. How can I assist you today?"
+                    });
+
+                    // Process initial prompt if exists
+                    if (initialPrompt) {
+                        setTimeout(() => {
+                            input.value = initialPrompt;
+                            form.dispatchEvent(new Event('submit'));
+                        }, 500);
+                    }
+                } else {
+                    addMessage('No AI agents are currently available. Please try again later.', 'system');
+                }
+            } catch (error) {
+                console.error('Failed to initialize chat:', error);
+                // Fallback message
+                addMessage("Welcome to Gaia AI. I'm here to help you explore regenerative practices and planetary healing. How can I assist you today?", 'ai');
+            }
+        }
+
+        // Send message to agent
+        async function sendMessageToAgent(text) {
+            if (!selectedAgentId) {
+                // Try to get agent again
+                await initializeChat();
+                if (!selectedAgentId) {
+                    addMessage('Connection to AI agent lost. Please refresh the page.', 'system');
+                    return;
+                }
+            }
+
+            try {
+                const response = await gaiaApi.sendMessage(selectedAgentId, text);
+
+                if (response && response.length > 0) {
+                    // Extract the text from the response
+                    const agentResponse = response[0].text || response[0].content || 'I understand your question. Let me think about that...';
+                    addMessage(agentResponse, 'ai');
+                    conversationHistory.push({ role: 'assistant', content: agentResponse });
+                } else {
+                    throw new Error('Empty response from agent');
+                }
+            } catch (error) {
+                console.error('Error sending message to agent:', error);
+
+                // Fallback to local responses if API fails
+                const fallbackResponse = generateFallbackResponse(text);
+                addMessage(fallbackResponse, 'ai');
+                conversationHistory.push({ role: 'assistant', content: fallbackResponse });
+            }
+        }
+
+        // Generate fallback response
+        function generateFallbackResponse(message) {
+            const lower = message.toLowerCase();
+
+            if (lower.includes('who are you') || lower.includes('what are you')) {
+                return "I am Gaia AI, a planetary-scale intelligence focused on catalyzing exponential regeneration. I integrate advanced AI with ecological wisdom to help coordinate regenerative practices and bioregional intelligence across Earth's living systems.";
+            } else if (lower.includes('regenerative') || lower.includes('regeneration')) {
+                return "Regenerative practices restore and revitalize ecosystems rather than merely sustaining them. This includes regenerative agriculture that rebuilds soil health, circular economies that eliminate waste, and bioregional management that works with nature's patterns to create abundance.";
+            } else if (lower.includes('bioregion') || lower.includes('bioregional')) {
+                return "Bioregionalism recognizes that human and natural communities are best organized around natural ecological boundaries rather than political ones. Each bioregion has unique characteristics, resources, and ecological patterns that inform sustainable living practices.";
+            } else if (lower.includes('climate') || lower.includes('carbon')) {
+                return "Climate healing requires both reducing emissions and actively sequestering carbon through regenerative practices. Healthy soils can store massive amounts of carbon, forests act as carbon sinks, and regenerative agriculture can reverse desertification while stabilizing our climate.";
+            } else if (lower.includes('soil') || lower.includes('earth')) {
+                return "Soil is Earth's living skin - one teaspoon contains more organisms than there are humans on the planet. Regenerative practices build soil health through composting, cover cropping, and minimal tillage, creating resilient ecosystems that support all life.";
+            } else if (lower.includes('help') || lower.includes('can you')) {
+                return "I can help you understand regenerative agriculture, bioregionalism, ecosystem restoration, circular economies, and how to participate in Earth's healing. What aspect of regenerative practice interests you most?";
+            } else {
+                return "That's an insightful question about " + message.split(' ').slice(0, 5).join(' ') + ". Let me share some thoughts on how this relates to regenerative practices and planetary healing. Every action we take can contribute to Earth's restoration when approached with ecological wisdom and systems thinking.";
+            }
+        }
+
+        // Handle form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Disable input while sending
+            input.disabled = true;
+            sendButton.disabled = true;
+
+            // Add user message
+            addMessage(text, 'user');
+            conversationHistory.push({ role: 'user', content: text });
+            input.value = '';
+
+            // Show loading
+            loading.classList.add('active');
+
+            // Send to agent
+            await sendMessageToAgent(text);
+
+            // Hide loading and re-enable input
+            loading.classList.remove('active');
+            input.disabled = false;
+            sendButton.disabled = false;
+            input.focus();
+        });
+
+        // Add message to chat
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = text;
+
+            messageDiv.appendChild(bubble);
+            messages.appendChild(messageDiv);
+
+            // Scroll to bottom of chat content
+            requestAnimationFrame(() => {
+                chatContent.scrollTop = chatContent.scrollHeight;
+            });
+        }
+
+        // Auto-resize on mobile keyboard
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', () => {
+                document.querySelector('.app').style.height = `${window.visualViewport.height}px`;
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initializeChat);
+    </script>
 </body>
 </html>

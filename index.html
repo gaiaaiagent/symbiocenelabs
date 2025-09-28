@@ -183,8 +183,8 @@
                     
                     const prompt = chatPromptInput.value.trim();
                     if (prompt) {
-                        // Open chat.html in a new tab with the prompt as a query parameter
-                        const chatUrl = `chat.html?prompt=${encodeURIComponent(prompt)}`;
+                        // Open /chat in a new tab with the prompt as a query parameter
+                        const chatUrl = `/chat?prompt=${encodeURIComponent(prompt)}`;
                         window.open(chatUrl, '_blank');
                         
                         // Clear the input field

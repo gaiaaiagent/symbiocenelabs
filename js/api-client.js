@@ -86,10 +86,17 @@ class GaiaApiClient {
                 formData.append('file', file);
             }
             
+            // Create an AbortController with a 30-second timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000);
+            
             const response = await fetch(`${this.baseUrl}${this.apiPath}/${agentId}/message`, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
             
             if (!response.ok) {
                 throw new Error(`Failed to send message: ${response.status} ${response.statusText}`);
