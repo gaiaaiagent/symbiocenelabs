@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(ls:*)",
+      "Bash(git rm:*)",
+      "Bash(rm:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(./serve.sh:*)",
+      "Bash(grep:*)",
+      "Bash(git merge:*)",
+      "Bash(systemctl status:*)",
+      "Bash(curl:*)",
+      "Bash(kill:*)",
+      "Bash(find:*)"
+    ],
+    "deny": []
+  },
+  "enableAllProjectMcpServers": false
+}

@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arca+Majora:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800;900&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 14px;
+  
+  /* Gaia Color Palette - Enhanced */
+  --gaia-green: #00ff88;
+  --gaia-green-light: #4ade80;
+  --gaia-green-dark: #16a34a;
+  --gaia-green-neon: #00ff88;
+  --gaia-black: #000000;
+  --gaia-gray-darkest: #0a0a0a;
+  --gaia-gray-dark: #111111;
+  --gaia-gray: #1a1a1a;
+  --gaia-gray-medium: #2a2a2a;
+  --gaia-gray-light: #404040;
+  --gaia-white: #ffffff;
+  
+  /* Dark mode as default */
+  --background: var(--gaia-black);
+  --foreground: var(--gaia-white);
+  --card: var(--gaia-gray-dark);
+  --card-foreground: var(--gaia-white);
+  --popover: var(--gaia-gray-dark);
+  --popover-foreground: var(--gaia-white);
+  --primary: var(--gaia-green);
+  --primary-foreground: var(--gaia-black);
+  --secondary: var(--gaia-gray);
+  --secondary-foreground: var(--gaia-white);
+  --muted: var(--gaia-gray-medium);
+  --muted-foreground: #94a3b8;
+  --accent: var(--gaia-green-light);
+  --accent-foreground: var(--gaia-black);
+  --destructive: #ef4444;
+  --destructive-foreground: var(--gaia-white);
+  --border: rgba(0, 255, 136, 0.2);
+  --input: var(--gaia-gray);
+  --input-background: var(--gaia-gray-medium);
+  --switch-background: var(--gaia-gray-medium);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: var(--gaia-green);
+  --chart-1: var(--gaia-green);
+  --chart-2: var(--gaia-green-light);
+  --chart-3: var(--gaia-green-dark);
+  --chart-4: #10b981;
+  --chart-5: #059669;
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Gaia Custom Colors */
+  --color-gaia-green: var(--gaia-green);
+  --color-gaia-green-light: var(--gaia-green-light);
+  --color-gaia-green-dark: var(--gaia-green-dark);
+  --color-gaia-green-neon: var(--gaia-green-neon);
+  --color-gaia-black: var(--gaia-black);
+  --color-gaia-gray-darkest: var(--gaia-gray-darkest);
+  --color-gaia-gray-dark: var(--gaia-gray-dark);
+  --color-gaia-gray: var(--gaia-gray);
+  --color-gaia-gray-medium: var(--gaia-gray-medium);
+  --color-gaia-gray-light: var(--gaia-gray-light);
+  --color-gaia-white: var(--gaia-white);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Arca Majora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.03) 0%, transparent 50%),
+                linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+    min-height: 100vh;
+  }
+  
+  .font-title {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
+  }
+  
+  .font-code {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-weight: 700;
+  }
+  
+  .font-body {
+    font-family: 'Arca Majora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    h4 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.4;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    p {
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.7;
+      font-family: 'Arca Majora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    label {
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.5;
+      font-family: 'Arca Majora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    button {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.5;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    input {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      font-family: 'Arca Majora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+  scroll-behavior: smooth;
+}
+
+/* Custom utilities */
+@layer utilities {
+  .text-gradient-green {
+    background: linear-gradient(135deg, var(--gaia-green-neon) 0%, var(--gaia-green-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-glow-green {
+    color: var(--gaia-green-neon);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  }
+  
+  .bg-gradient-green {
+    background: linear-gradient(135deg, var(--gaia-green-neon) 0%, var(--gaia-green-light) 100%);
+  }
+  
+  .bg-gradient-green-glow {
+    background: linear-gradient(135deg, var(--gaia-green-neon) 0%, var(--gaia-green-light) 100%);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+  }
+  
+  .bg-gradient-dark {
+    background: linear-gradient(135deg, var(--gaia-black) 0%, var(--gaia-gray-dark) 100%);
+  }
+  
+  .glass {
+    backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+  }
+  
+  .glass-green {
+    backdrop-filter: blur(20px);
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+  }
+  
+  .neon-border {
+    border: 1px solid var(--gaia-green-neon);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+  }
+  
+  .cyber-grid {
+    background-image: 
+      linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  
+  .matrix-bg {
+    background: radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0, 255, 136, 0.03) 0%, transparent 50%);
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gaia-gray-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gaia-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gaia-green-light);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--gaia-white);
+}

@@ -1,0 +1,321 @@
+/* Symbiocene Labs Website Styles */
+
+/* Import Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* CSS Variables */
+:root {
+    --gaia-dark-green: #004D40;
+    --gaia-medium-green: #00796B;
+    --gaia-light-green: #B2DFDB;
+    --gaia-accent-teal: #1DE9B6;
+    --gaia-text-light: #E0F2F1;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    background-color: var(--gaia-dark-green);
+    color: var(--gaia-text-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-gaia-accent-teal {
+    color: var(--gaia-accent-teal);
+}
+
+.text-gaia-text-light {
+    color: var(--gaia-text-light);
+}
+
+.max-w-4xl {
+    max-width: 56rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Flex Utilities */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+a {
+    color: var(--gaia-accent-teal);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--gaia-light-green);
+}
+
+/* Layout */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(29, 233, 182, 0.5);
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    color: var(--gaia-text-light);
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--gaia-accent-teal);
+}
+
+.logo-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gaia-accent-teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.logo-v {
+    color: var(--gaia-accent-teal);
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Space Mono', monospace;
+}
+
+/* Header */
+header {
+    padding: 4rem 0;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+/* Main Content */
+main {
+    padding: 2rem 0;
+}
+
+section {
+    margin-bottom: 3rem;
+}
+
+/* Pixel Box Style */
+.pixel-box {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 121, 107, 0.8);
+    padding: 1.5rem;
+    clip-path: polygon(
+        0 4px, 
+        4px 0, 
+        calc(100% - 4px) 0, 
+        100% 4px, 
+        100% calc(100% - 4px), 
+        calc(100% - 4px) 100%, 
+        4px 100%, 
+        0 calc(100% - 4px)
+    );
+}
+
+/* Pixel Dot Animation */
+.pixel-dot {
+    display: inline-block;
+    height: 0.375rem;
+    width: 0.375rem;
+    background-color: var(--gaia-accent-teal);
+    margin: 0 0.125rem;
+}
+
+.animate-pixel-fade {
+    animation: pixel-fade 3s ease-in-out infinite;
+}
+
+@keyframes pixel-fade {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+/* Mycelium Network Background */
+.data-grid {
+    /* Grid background removed and replaced with canvas in JS */
+    background-color: var(--gaia-dark-green);
+}
+
+/* Canvas styling */
+#mycelium-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(29, 233, 182, 0.5);
+    background-color: rgba(29, 233, 182, 0.1);
+    color: var(--gaia-accent-teal);
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgba(29, 233, 182, 0.8);
+    color: var(--gaia-dark-green);
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Footer */
+footer {
+    padding: 2rem 0;
+    text-align: center;
+    color: rgba(224, 242, 241, 0.7);
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    header h1 {
+        font-size: 4rem;
+    }
+    
+    .md\:text-5xl {
+        font-size: 3rem;
+        line-height: 1;
+    }
+    
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    header h1 {
+        font-size: 5rem;
+    }
+    
+    .lg\:text-6xl {
+        font-size: 3.75rem;
+        line-height: 1;
+    }
+    
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
