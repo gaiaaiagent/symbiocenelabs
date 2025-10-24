@@ -101,22 +101,6 @@ export function FeaturesSection() {
           </p>
         </motion.div>
 
-        {/* Stats Row */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          {stats.map((stat, index) => (
-            <Card key={stat.label} className="p-6 text-center bg-gradient-to-br from-card to-card/50 border-border/50">
-              <stat.icon className="w-8 h-8 text-gaia-green mx-auto mb-4" />
-              <div className="font-title text-3xl font-bold text-foreground mb-2">{stat.value}</div>
-              <div className="text-muted-foreground font-medium">{stat.label}</div>
-            </Card>
-          ))}
-        </motion.div>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

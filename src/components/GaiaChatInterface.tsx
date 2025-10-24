@@ -116,10 +116,6 @@ export function GaiaChatInterface() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-6 bg-gaia-green/20 text-gaia-green border-gaia-green/50 neon-border">
-            <Brain className="w-3 h-3 mr-1" />
-            Interactive AI Consciousness
-          </Badge>
           
           <h2 className="font-title text-4xl md:text-6xl font-black text-gaia-white mb-6">
             Chat with <span className="text-gradient-green">Gaia</span>

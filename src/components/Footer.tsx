@@ -42,9 +42,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Github, href: '#github', label: 'GitHub' },
-  { icon: Twitter, href: '#twitter', label: 'Twitter' },
-  { icon: Linkedin, href: '#linkedin', label: 'LinkedIn' },
+  { icon: Github, href: 'https://github.com/gaiaaiagent', label: 'GitHub' },
+  { icon: Twitter, href: 'https://x.com/GaiaAIxyz', label: 'Twitter' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/gaiaaiagent', label: 'LinkedIn' },
 ];
 
 export function Footer() {
