@@ -26,48 +26,54 @@ export function BlogSection() {
 
   const articles = [
     {
-      title: "RegenAI: Bridging Technology and Regenerative Agriculture",
-      excerpt: "Exploring how artificial intelligence can accelerate the transition to regenerative farming practices and ecosystem restoration.",
-      date: "December 2024",
-      tags: ["Regenerative Agriculture", "AI", "Climate Tech"],
+      title: "Introducing GAIA AI",
+      excerpt: "Greetings GAIACHADS! We are approaching the launch of GAIA AI, an advanced agent deployed on the Virtuals.io platform designed to lead the charge in regenerative action through decentralized intelligence and blockchain technology.",
+      date: "December 6, 2024",
+      url: "https://paragraph.com/@gaiaai/genesis",
+      tags: ["Launch", "AI Agent", "Blockchain"],
       featured: true
     },
     {
-      title: "The Symbiocene: AI as Earth's Nervous System",
-      excerpt: "Envisioning a future where technology and nature exist in perfect symbiosis, creating a thriving planetary consciousness.",
-      date: "November 2024",
-      tags: ["Symbiocene", "Philosophy", "Environmental AI"]
+      title: "The Winners of Regen IRL",
+      excerpt: "Gaia AI and Regen Network recently teamed up to launch REGEN IRL, a grassroots grant competition to supercharge on-the-ground regenerative projects. The challenge: award $888 USD to the project promising the highest Planetary Return on Investment (PROI).",
+      date: "October 12, 2024",
+      url: "https://paragraph.com/@gaiaai/irlwinners",
+      tags: ["Grants", "REGEN IRL", "Impact"]
     },
     {
-      title: "Ecological Credit Systems: Blockchain Meets Environmental Science",
-      excerpt: "How distributed ledger technology is revolutionizing the verification and trading of ecological restoration credits.",
-      date: "October 2024",
-      tags: ["Blockchain", "Carbon Credits", "Verification"]
+      title: "Announcing REGEN IRL",
+      excerpt: "Gaia AI and Regen Network are thrilled to announce REGEN IRL, a new collaborative grant competition aimed at supercharging grassroots regenerative projects around the world. The program offers an $888 award to the on-the-ground project that delivers the highest Planetary Return on Investment (PROI).",
+      date: "September 10, 2024",
+      url: "https://paragraph.com/@gaiaai/regenirl",
+      tags: ["Grants", "Partnership", "Regenerative"]
     },
     {
-      title: "Machine Learning for Biodiversity Conservation",
-      excerpt: "Advanced algorithms that can predict ecosystem changes and guide conservation efforts with unprecedented accuracy.",
-      date: "September 2024",
-      tags: ["Biodiversity", "Conservation", "ML"]
+      title: "Announcing Regen AI",
+      excerpt: "Gaia AI and Regen Network have officially partnered to launch Regen AI, a joint initiative to catalyze the regenerative finance (ReFi) movement using advanced AI systems.",
+      date: "August 1, 2024",
+      url: "https://paragraph.com/@gaiaai/regenai",
+      tags: ["Partnership", "ReFi", "Regen Network"]
     },
     {
-      title: "Digital Twins of Earth: Modeling Planetary Systems",
-      excerpt: "Creating comprehensive digital representations of Earth's systems to better understand and protect our planet.",
-      date: "August 2024",
-      tags: ["Digital Twins", "Earth Systems", "Modeling"]
+      title: "Envisioning GAIA AI",
+      excerpt: "Financial markets and ecosystems are deeply intertwined. As climate change and biodiversity loss accelerate, the ecological stability of the planet is increasingly recognized as a prerequisite for price and financial stability. This article explores the importance of creating a planetary data visualization system.",
+      date: "March 19, 2024",
+      url: "https://paragraph.com/@gaiaai/envisioning",
+      tags: ["Vision", "Data Visualization", "Climate"]
     },
     {
-      title: "The Future of Environmental Monitoring",
-      excerpt: "IoT sensors, satellite imagery, and AI combine to create real-time planetary health diagnostics.",
-      date: "July 2024",
-      tags: ["IoT", "Monitoring", "Satellites"]
+      title: "GAIA AI MANIFESTO",
+      excerpt: "Over the past month, GAIA has grown from a far-out concept hatched by two dedicated degens into a full-blown movement with a strong core team, two full-time developers, a global community, and a rapidly growing reach.",
+      date: "January 8, 2024",
+      url: "https://paragraph.com/@gaiaai/manifesto",
+      tags: ["Manifesto", "Vision", "Community"]
     }
   ];
 
   return (
     <section id="blog-section" className="relative py-32 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gaia-gray-darkest via-gaia-black to-gaia-gray-dark" />
+      <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 cyber-grid opacity-20" />
       
       {/* Animated background elements */}
@@ -141,8 +147,9 @@ export function BlogSection() {
                   </div>
                 </div>
                 
-                <Button 
+                <Button
                   className="bg-gradient-green-glow hover:scale-105 transition-all duration-300 text-black font-title font-bold group"
+                  onClick={() => window.open(articles[0].url, '_blank')}
                 >
                   Read Article
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -153,7 +160,7 @@ export function BlogSection() {
         </motion.div>
 
         {/* Articles Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.slice(1).map((article, index) => (
             <motion.div
               key={index}
@@ -167,15 +174,15 @@ export function BlogSection() {
                     <Calendar className="w-4 h-4" />
                     <span className="font-body text-sm">{article.date}</span>
                   </div>
-                  
+
                   <h4 className="font-title font-bold text-lg text-gaia-white mb-3 group-hover:text-gaia-green transition-colors">
                     {article.title}
                   </h4>
-                  
+
                   <p className="text-gaia-white/80 font-body text-sm leading-relaxed mb-4 flex-grow">
                     {article.excerpt}
                   </p>
-                  
+
                   <div className="space-y-4">
                     <div className="flex flex-wrap gap-2">
                       {article.tags.map((tag, tagIndex) => (
@@ -188,11 +195,12 @@ export function BlogSection() {
                         </Badge>
                       ))}
                     </div>
-                    
-                    <Button 
-                      variant="outline" 
+
+                    <Button
+                      variant="outline"
                       size="sm"
                       className="w-full border-gaia-green/50 text-gaia-green hover:bg-gaia-green/10 font-title font-bold group"
+                      onClick={() => window.open(article.url, '_blank')}
                     >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -202,44 +210,40 @@ export function BlogSection() {
               </Card>
             </motion.div>
           ))}
-        </div>
 
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center"
-        >
-          <div className="glass rounded-2xl p-8 border border-gaia-green/30 max-w-2xl mx-auto">
-            <h3 className="font-title font-bold text-2xl text-gaia-white mb-4">
-              Stay Updated with Gaia AI Research
-            </h3>
-            <p className="text-gaia-white/80 font-body mb-6 leading-relaxed">
-              Follow our blog on Paragraph to receive the latest insights on environmental AI, 
-              regenerative technology, and planetary intelligence.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg"
-                className="bg-gradient-green-glow hover:scale-105 transition-all duration-300 text-black font-title font-bold group"
-              >
-                <ExternalLink className="w-5 h-5 mr-2" />
-                Visit Our Blog
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              
-              <Button 
-                size="lg"
-                variant="outline" 
-                className="border-gaia-green/50 text-gaia-green hover:bg-gaia-green/10 font-title font-bold"
-              >
-                Subscribe to Updates
-              </Button>
-            </div>
-          </div>
-        </motion.div>
+          {/* Visit Blog Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 + 5 * 0.1 }}
+          >
+            <Card className="glass border-gaia-green/30 hover:border-gaia-green/50 transition-all duration-300 h-full group">
+              <CardContent className="p-6 flex flex-col h-full justify-center items-center text-center">
+                <div className="w-12 h-12 bg-gradient-green rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <ExternalLink className="w-6 h-6 text-black" />
+                </div>
+
+                <h4 className="font-title font-bold text-lg text-gaia-white mb-3">
+                  Stay Updated with Gaia AI Research
+                </h4>
+
+                <p className="text-gaia-white/80 font-body text-sm leading-relaxed mb-6 flex-grow">
+                  Follow our blog on Paragraph to receive the latest insights on environmental AI,
+                  regenerative technology, and planetary intelligence.
+                </p>
+
+                <Button
+                  size="sm"
+                  className="w-full bg-gradient-green-glow hover:scale-105 transition-all duration-300 text-black font-title font-bold group"
+                  onClick={() => window.open('https://paragraph.com/@gaiaai', '_blank')}
+                >
+                  Visit Our Blog
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

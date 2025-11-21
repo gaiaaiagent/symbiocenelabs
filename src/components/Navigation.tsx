@@ -5,13 +5,14 @@ import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Menu, X, Zap } from 'lucide-react';
 import gaiaLogo from 'figma:asset/23037793ba458b8a1b0791484732402053478d7b.png';
+import { ThemeToggle } from './ThemeToggle';
 
 const navItems = [
   { label: 'Home', href: '#home' },
+  { label: 'About', href: '#about' },
   { label: 'Chat', href: '#gaia-chat' },
-  { label: 'RegenAI', href: '#regen-ai' },
+  { label: 'Projects', href: '#regen-ai' },
   { label: 'Research', href: '#blog-section' },
-  { label: 'Gallery', href: '#nft-gallery' },
 ];
 
 export function Navigation() {
@@ -65,7 +66,7 @@ export function Navigation() {
               />
             </div>
             <span className="font-title text-xl font-black text-gaia-white">
-              GAIA<span className="text-glow-green">AI</span>
+              G<span className="text-glow-green">AI</span>A
             </span>
           </motion.div>
 
@@ -92,16 +93,7 @@ export function Navigation() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <Button 
-              variant="outline" 
-              className="border-gaia-green/50 text-gaia-green hover:bg-gaia-green/10 font-title font-bold"
-            >
-              Access Portal
-            </Button>
-            <Button className="bg-gradient-green-glow hover:scale-105 transition-all duration-300 text-black font-title font-bold">
-              <Zap className="w-4 h-4 mr-2" />
-              Start Now
-            </Button>
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -138,17 +130,8 @@ export function Navigation() {
                   {item.label}
                 </a>
               ))}
-              <div className="flex flex-col gap-2 mt-4">
-                <Button 
-                  variant="outline" 
-                  className="border-gaia-green/50 text-gaia-green hover:bg-gaia-green/10 font-title font-bold"
-                >
-                  Access Portal
-                </Button>
-                <Button className="bg-gradient-green-glow hover:scale-105 transition-all duration-300 text-black font-title font-bold">
-                  <Zap className="w-4 h-4 mr-2" />
-                  Start Now
-                </Button>
+              <div className="flex justify-center mt-4">
+                <ThemeToggle />
               </div>
             </div>
           </motion.div>

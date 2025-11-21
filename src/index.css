@@ -5877,9 +5877,85 @@
   --radius: .75rem;
 }
 
+/* Light Mode Theme */
+@layer base {
+[data-theme="light"] {
+  --gaia-green: #0f8;
+  --gaia-green-light: #4ade80;
+  --gaia-green-dark: #16a34a;
+  --gaia-green-neon: #0f8;
+  --gaia-black: #f0fdfc;
+  --gaia-gray-darkest: #e0f7f5;
+  --gaia-gray-dark: #fff;
+  --gaia-gray: #f0fdfc;
+  --gaia-gray-medium: #e0f7f5;
+  --gaia-gray-light: #d0f0ed;
+  --gaia-white: #0f172a;
+  --background: #f0fdfc;
+  --foreground: #0f172a;
+  --card: #fff;
+  --card-foreground: #0f172a;
+  --popover: #fff;
+  --popover-foreground: #0f172a;
+  --primary: var(--gaia-green);
+  --primary-foreground: #000;
+  --secondary: #e0f7f5;
+  --secondary-foreground: #0f172a;
+  --muted: #e0f7f5;
+  --muted-foreground: #475569;
+  --accent: var(--gaia-green-light);
+  --accent-foreground: #000;
+  --destructive: #ef4444;
+  --destructive-foreground: #fff;
+  --border: rgba(0, 255, 136, 0.2);
+  --input: #f0fdfc;
+  --input-background: #fff;
+  --switch-background: #e0f7f5;
+  --ring: var(--gaia-green);
+  --chart-1: var(--gaia-green);
+  --chart-2: var(--gaia-green-light);
+  --chart-3: var(--gaia-green-dark);
+  --chart-4: #10b981;
+  --chart-5: #059669;
+}
+
+/* Light mode specific adjustments */
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+[data-theme="light"] .bg-gradient-dark {
+  background: linear-gradient(to bottom, #f0fdfc, #e0f7f5);
+}
+
+[data-theme="light"] ::selection {
+  background: rgba(0, 255, 136, 0.3);
+  color: #0f172a;
+}
+
+[data-theme="light"] .text-gradient-green {
+  background: linear-gradient(135deg, #16a34a 0%, #0f8 100%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+[data-theme="light"] .text-glow-green {
+  color: #16a34a;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+}
+
 html {
   font-size: var(--font-size);
   scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
+body {
+  overscroll-behavior: none;
 }
 
 ::-webkit-scrollbar {

@@ -24,10 +24,8 @@ const initialMessages: Message[] = [
 ];
 
 const suggestedQuestions = [
-  "How can AI help with carbon sequestration?",
-  "What are the latest regenerative agriculture trends?",
-  "Show me biodiversity data for my region",
-  "How do I calculate my ecological footprint?",
+  "Can AI alleviate or accelerate the Metacrisis?",
+  "What is bioregionalism?",
 ];
 
 export function GaiaChatInterface() {
@@ -102,7 +100,7 @@ export function GaiaChatInterface() {
   return (
     <section id="gaia-chat" className="relative py-32 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gaia-black via-gaia-gray-darkest to-gaia-black" />
+      <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 matrix-bg opacity-20" />
       
       {/* Animated background elements */}
@@ -142,7 +140,6 @@ export function GaiaChatInterface() {
                   <div className="w-12 h-12 bg-gradient-green rounded-full flex items-center justify-center">
                     <Globe className="w-6 h-6 text-black" />
                   </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gaia-green rounded-full animate-pulse" />
                 </div>
                 <div>
                   <h3 className="font-title font-bold text-lg text-gaia-white">Gaia AI</h3>
